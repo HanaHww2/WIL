@@ -1,0 +1,241 @@
+# 0. function?
+
+- JS는 Procedural Language (절차적 언어)이다.
+    - 추가된 Class는 Pure한 Object Oriented가 아닌 Proto type을 활용한 가짜 Object Oriented라고 볼 수 있다.
+    
+    ↔ Java는 대표적 Object Oriented Language
+    
+- JS에서 function은 굉장히 중요한 기능을 담당하며, 때로 sub-program이라고도 불린다.
+    - 프로그램을 구성하는 기본적인(fundamental) building block이다.
+    - 여러번 사용이 가능한 subprogram이다.
+    - 한 가지 task를 수행하거나, 어떤 값을 계산하기 위해 활용된다.
+
+## 1. Function declaration
+
+- function name(param1, param2, ...) { body... return; }
+- function is object in JS
+    - 변수에 할당할 수 있고, 매개변수로 전달이 가능하며, 리턴 값으로도 쓰인다.
+- 하나의 함수는 한 가지의 일만 하도록 만든다.
+- naming : doSomething, command, verb 형태로 지정
+    - e.g. createCardAndPoint -> createCard, createPoint
+    - 위의 경우는 함수가 한 가지 일만 담당하도록 함수를 쪼개어줄 필요가 있다.
+
+```jsx
+function printHello() {
+  console.log('Hello');
+}
+printHello();
+
+function log(message) {
+  console.log(message);
+}
+log('Hello@');
+log(1234);
+```
+
+## 2. Parameters
+
+```jsx
+// primitive parameters: passed by value
+// object parameters: passed by reference
+function changeName(obj) {
+  obj.name = 'coder';
+}
+
+const ellie = { name: 'ellie' };
+changeName(ellie);
+console.log(ellie); // { name: 'coder'}
+```
+
+## 3. Default parameters (added in ES6)
+
+```jsx
+function showMessage(message, from = 'unknown') {
+	// if (from===undefiend) from = 'unknown';
+  console.log(`${message} by ${from}`);
+}
+showMessage('Hi!');
+```
+
+## 4. Rest parameters (added in ES6)
+
+- 매개변수에 배열 형태로 자료를 전달할 수 있다.
+
+```jsx
+function printAll(...args) {
+  for (let i = 0; i < args.length; i++) {
+    console.log(args[i]);
+  }
+  // for of 구문 이용
+  for (const arg of args) {
+    console.log(arg);
+  }
+	// forEach() 함수형 구문 이용
+  args.forEach((arg) => console.log(arg));
+}
+printAll('dream', 'coding', 'ellie');
+```
+
+## 5. Local scope
+
+- 심화 : closure, Lexical Environment
+    - 참고) [https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures](https://developer.mozilla.org/ko/docs/Web/JavaScript/Closures)
+    - 오마이걸 closer로 멘탈 회복) [https://www.youtube.com/watch?v=OBscl9zzOTs](https://www.youtube.com/watch?v=OBscl9zzOTs)
+- 밖에서는 안이 보이지 않고, 안에서만 밖을 볼 수 있다.
+
+```jsx
+let globalMessage = 'global'; // global variable
+function printMessage() {
+  let message = 'hello';
+  console.log(message); // local variable
+  console.log(globalMessage);
+
+  function printAnother() {
+    console.log(message);
+    let childMessage = 'hello';
+  }
+  // console.log(childMessage); //error
+}
+printMessage();
+```
+
+## 6. Return a value
+
+- 리턴이 없는 경우는 return undefined; 와 같다.
+
+```jsx
+function sum(a, b) {
+  return a + b;
+}
+const result = sum(1, 2); // 3
+console.log(`sum: ${sum(1, 2)}`);
+```
+
+## 7. Early return, early exit
+
+```jsx
+// bad
+function upgradeUser(user) {
+  if (user.point > 10) {
+    // long upgrade logic...
+  }
+}
+
+// good
+function upgradeUser(user) {
+  if (user.point <= 10) {
+    return;// 조건이 적합하지 않을 때는 빨리 함수를 종료한다.
+  }
+  // long upgrade logic...
+}
+```
+
+# 0-1. First-class function
+
+- functions are treated like any other variable.
+    - can be assigned as a value to variable.
+    - can be passed as an argument to other functions.
+    - can be returned by another function.
+
+## 1. Function expression
+
+- a **function expression** is created when the execution reaches it.
+    
+    ↔ a **function declaration** can be called earlier than it is defined. (**hoisted**)
+    
+    - 함수 선언 이전에 호출이 가능하다.
+    - JS 엔진이 선언된 함수를 가장 위로 끌어올려 준다.
+
+```jsx
+// function expression
+const print = function () { // anonymous function
+  console.log('print');
+};
+print();
+const printAgain = print;
+printAgain();
+
+const sumAgain = sum; // function declaration 방식으로 만들어진 함수 또한 변수에 할당 가능하다.
+console.log(sumAgain(1, 3));
+```
+
+## 2. Callback function using function expression
+
+- 
+
+```jsx
+function randomQuiz(answer, printYes, printNo) {
+  if (answer === 'love you') {
+    printYes();
+  } else {
+    printNo();
+  }
+}
+
+// function expression - anonymous function
+const printYes = function () {
+  console.log('yes!');
+};
+
+// function expression - named function
+// better debugging in debugger's stack traces
+// debugger's stack traces에 함수의 이름이 명시적으로 나타난다.
+// 필요시 recursion 용법으로 활용하기 위해서 사용하기도 한다.
+const printNo = function print() {
+  console.log('no!');
+	// print();
+};
+
+randomQuiz('wrong', printYes, printNo);
+randomQuiz('love you', printYes, printNo);
+```
+
+## 3. Arrow function
+
+```jsx
+// always anonymous function
+
+// const simplePrint = function () {
+//   console.log('simplePrint!');
+// }; arrow function 문법을 사용하면, 아래와 같이 심플하게 작성할 수 있다.
+const simplePrint = () => console.log('simplePrint!');
+const add = (a, b) => a + b; // return 키워드가 없어도 a + b가 리턴된다.
+const simpleMultiply = (a, b) => {
+  // do something more
+  return a * b;
+};
+```
+
+## 4. IIFE: Immediately Invoked Function Expression
+
+```jsx
+// 함수의 선언과 동시에 함수 호출
+// 자주 쓰이는 문법은 아니다.
+(function hello() {
+  console.log('IIFE');
+})();
+```
+
+```jsx
+// Fun quiz time❤️
+// function calculate(command, a, b)
+// command: add, substract, divide, multiply, remainder
+
+function calculate(command, a, b) {
+  switch (command) {
+    case 'add':
+      return a + b;
+    case 'substract':
+      return a - b;
+    case 'divide':
+      return a / b;
+    case 'multiply':
+      return a * b;
+    case 'remainder':
+      return a % b;
+    default:
+      throw Error('unknown command');
+  }
+}
+console.log(calculate('add', 2, 3));
+```

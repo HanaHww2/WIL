@@ -1,0 +1,139 @@
+# 객체
+
+- 자바스크립트의 객체는 기본적으로 싱글톤 패턴을 따른다.
+- 자바스크립트 객체를 활용하면 비슷한 행위를 하는 코드를 묶어서 모듈화를 간단히 만들 수 있다.
+- 자바스크립트에서는 객체 리터럴이라는 표현식을 이용해 객체를 쉽게 만들 수 있다.
+
+### 객체 리터럴(Object literal) 패턴
+
+- 참고) [https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Object_initializer](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Object_initializer)
+
+```jsx
+var healthObj = {
+  name : "달리기",
+  lastTime : "PM10:12",
+  showHealth : function() {
+    console.log(this.name + "님, 오늘은 " + this.lastTime + "에 운동을 하셨네요");
+  }
+}
+
+healthObj.showHealth();
+```
+
+- 참고로, ES6에서는 객체에서 메서드를 사용할 때 'function' 키워드를 생략할 수 있다.
+
+```jsx
+const obj = {
+   getName() {
+     return this.name;
+     },
+  setName(name) {
+      this.name = name;
+    }
+}
+obj.setName("crong");
+const result = obj.getName();
+```
+
+# this
+
+### 실행 문맥(Execution context)
+
+- JavaScript에는 전역스크립트나 함수가 실행될 때 실행문맥(Execution context)이 생성된다.
+    - 참고로 실제 실행은 브라우저내에 stack 이라는 메모리 공간에서 진행된다.
+- 모든 context에는 참조하고 있는 객체(thisBinding이라 함)가 존재하는데, 현재 context가 참조하고 있는 객체를 알기 위해서는 this를 사용할 수 있다.
+    - 함수가 실행될때 함수에서 가리키는 this 키워드를 출력해보면 context가 참조하고 있는 객체를 알 수 있다.
+    
+    ```jsx
+    function get() {
+        return this;
+    }
+    
+    get(); //window. 함수가 실행될때의 컨텍스트는 window를 참조한다.
+    new get(); //object. new키워드를 쓰면 새로운 object context가 생성된다.
+    ```
+    
+
+### this keyword
+
+- 실행 컨텍스트에 따라 참조하는 객체(this)가 다르다.
+    - 즉, this 가 참조하는 객체는 실행 타이밍에 동적으로 결정된다.
+- 객체 안에서의 this는 그 객체 자신을 가리킨다.
+
+```jsx
+const obj = {
+   getName() { //ES6에서는 객체에서 메서드를 사용할 때 'function' 키워드를 생략할 수 있다.
+     return this.name;
+     },
+  setName(name) {
+      this.name = name;
+    }
+}
+obj.setName("crong");
+const result = obj.getName();
+```
+
+### this가 달라지는 경우
+
+```jsx
+let healthObj = {
+  name : "달리기",
+  lastTime : "PM10:12",
+  showHealth : function() {
+    setTimeout( function() { 
+				//debugger;
+				// 여기서 setTimeout의 콜백함수는 콜백 큐에 저장되고, showHealth는 먼저 반환된다.
+				// 컨텍스트가 달라지며, this는 최상위 window를 가리키게 된다.
+        console.log(this.name + "님, 오늘은 " + this.lastTime + "에 운동을 하셨네요");      
+		//}, 1000)    
+		}.bind(this), 1000)
+		// 콜백함수에 this(healthObj) 바인딩한다.
+  }
+}
+healthObj.showHealth();
+```
+
+### this binding - .bind()
+
+- 참고) [https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function/bind](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)
+- function 함수 뒤에 . keyword를 사용하면, 함수가 객체로 변한다.
+    - function native 객체에 들어있는 메서드들을 이용할 수 있다. 대표적인 메서드가 bind()이다.
+- bind 함수는 함수의 첫번째 인자로 this를 주어, 그 시점의 this를 기억하고 있는 새로운 (바인드된) 함수를 반환한다.
+- bind()에 인자를 주지 않으면, global (window) 객체가 바인딩된다. 또한 strict mode에서는 undefined가 바인딩된다.
+- ↔ **arrow 함수**는 함수가 속해있는 스코프의 컨텍스트를 유지하면서 동작한다.
+
+```jsx
+let healthObj = {
+  name : "달리기",
+  lastTime : "PM10:12",
+  showHealth : function() {
+    setTimeout( () => { 
+				//debugger;
+				// 여기서는 this가 healthObj를 잘 가리킨다.
+        console.log(this.name + "님, 오늘은 " + this.lastTime + "에 운동을 하셨네요");      
+		}, 1000)    
+  }
+}
+healthObj.showHealth();
+```
+
+### this binding - .call()
+
+- 컨텍스트가 가리키는 참조점을 변경할 수 있게 한다.
+
+```jsx
+let other = {
+	todos : "난 절대로 아무것도 하지 않는다."
+}
+let todo = {
+	todos : ["자바스크립트 공부"],
+	addTodo : function(newTodo) {
+		this.todos.push(newTodo);
+	},
+	showTodo : function() {
+		return this.todos;
+	}
+}
+todo.showTodo();
+todo.showTodo().call(other); // other 객체를 컨텍스트로 부른다.
+```

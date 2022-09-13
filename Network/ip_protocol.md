@@ -4,8 +4,8 @@
 
 <img src="images/networklayer2.png" title="networklayer2" style="item-align:center;">
 
-- IP 프로토콜을 활용한다.
-- transport layer의 segment 단위에 header를 붙이고 캡슐화 한 packet(datagram) 단위를 다룬다.
+- **IP 프로토콜**을 활용한다.
+- transport layer의 segment 단위에 header를 붙이고 캡슐화 한 **packet(datagram)** 단위를 다룬다.
 - 네트워크 레이어 프로토콜은 모든 인터넷 호스트와 라우터에 적용된다.
 
 ---
@@ -29,13 +29,13 @@
 
 - 개별 IP 주소로 테이블을 만든다면, 테이블 크기가 비대해지므로 대신, 주소의 범위로 테이블 키 값을 만든다.
 - 패킷의 헤더에 존재하는 목적지 주소값을 확인한다.
-- **Longest prefix matching** 을 활용해 매칭된 주소 중 가장 긴 prefix를 갖는 주소 범위로 라우팅한다.
+- **Longest prefix matching** 을 활용해 매칭된 주소 중 가장 긴 prefix를 갖는 경로로 라우팅한다.
 
 ---
 
 # IPv4
 
-- 유일한 값을 갖는 32bit 길이의 주소 체계
+- 유일한 값을 갖는 **32bit 길이**의 주소 체계
 - 아이피 주소는 계층적으로 구성된다. (prefix 이용)
 - Network Interface Card(NIC)마다 유일한 값을 갖는다.
   - 각각의 인터페이스(PC, Router 등)를 구분하기 위한 값이다.
@@ -86,11 +86,13 @@
 
 # Subnet
 
-- IP 주소 체계에서 동일한 서브넷 주소를 갖는 인터페이스들의 집합을 말한다.
+- IP 주소 체계에서 **동일한 서브넷 주소를 갖는 인터페이스들의 집합**을 말한다.
   - 이를 활용하여 라우팅 테이블 구성의 용이해진다.
 - 동일 서브넷 그룹 안에서는 라우터를 거치지 않고, 통신이 가능하다.
 
 <img src="images/subnet.png" style="width:400px">
+
+---
 
 # NAT (Network Address Translation)
 
@@ -105,11 +107,13 @@
 
 - NAT 대신 IPv6 등 다른 대안을 적용해야 한다.
 
+---
+
 # DHCP(Dynamic Host Configuration Protocol)
 
 ![dhcp](images/dhcp.png)
 
-호스트가 네트워크에 접속하면 동적으로 IP를 할당해주는 프로토콜
+호스트가 네트워크에 접속하면 **동적으로 IP를 할당해주는 프로토콜**
 
 - 고정 IP 방식에 비해 효율성이 높다.
 - DHCP 서버는 App Layer
@@ -118,6 +122,6 @@
 
 - DHCP discover : 네트워크에 도착한 클라이언트는 DHCP 서버를 찾아서 브로드캐스팅을 한다.
 - DHCP offer : 메세지를 받은 DHCP 서버는 사용가능 시간과 IP 주소를 알려주면서 할당 오퍼를 제공한다.
-  클라이언트는 아직 할당 받은 주소가 없으므로, 마찬가지로 브로드캐스팅을 한다. 트랜잭션 ID와 포트 넘버로 구분이 가능할 것이다.
+  클라이언트는 아직 할당 받은 주소가 없으므로, 마찬가지로 브로드캐스팅을 한다. 트랜잭션 ID와 포트 넘버로 구분이 가능할 것이다.  
   ( 그 외 DHCP 서버 주소, DNS 서버 주소, 라우터 주소 등의 정보도 함께 제공한다. 보통 게이트웨이 라우터가 모든 기능을 함께 담당하는 편이다. eg. 무선공유기)
 - DHCP request : 제공받은 offer를 쓰겠다는 요청을 보낸다. DHCP 서버가 여러 개 존재할 수 있으므로 브로드캐스팅으로 요청을 보내 특정 DHCP의 오퍼를 활용한다는 것을 알릴 수 있다.

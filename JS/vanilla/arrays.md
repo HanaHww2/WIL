@@ -1,0 +1,105 @@
+- dynamically typed language 답게(?), 다양한 타입의 원소를 하나의 배열에 담을 수 있다.
+    - 권장되는 배열 구성은 아니다!
+
+## 1. Declaration
+
+```jsx
+'use strict';
+
+const arr1 = new Array();
+const arr2 = [1, 2];
+```
+
+## 2. Index position
+
+```jsx
+const fruits = ['🍎', '🍌'];
+console.log(fruits);
+console.log(fruits.length);
+console.log(fruits[0]);
+console.log(fruits[1]);
+console.log(fruits[2]); // undefined
+console.log(fruits[fruits.length - 1]); // 배열 마지막 item 인덱싱
+```
+
+## 3. Looping over an array
+
+```jsx
+// print all fruits
+// a. for
+for (let i = 0; i < fruits.length; i++) {
+  console.log(fruits[i]);
+}
+
+// b. for of
+for (let fruit of fruits) {
+  console.log(fruit);
+}
+
+// c. forEach(callbackfn)
+fruits.forEach((fruit) => console.log(fruit));
+
+// 참고) forEach 내 콜백함수가 가질 수 있는 인자들
+fruits.forEach((fruit, index, array) => console.log(fruit, index, array));
+```
+
+## 4. Addition, deletion, copy
+
+```jsx
+// push: add an item to the end
+fruits.push('🍓', '🍑'); // 참고) 이모지도 문자열이다
+console.log(fruits);
+
+// pop: remove an item from the end
+const poped = fruits.pop();
+fruits.pop();
+console.log(fruits);
+
+// unshift: add an item to the benigging
+fruits.unshift('🍓', '🍋');
+console.log(fruits);
+
+// shift: remove an item from the benigging
+fruits.shift();
+fruits.shift();
+console.log(fruits);
+// 🧨note!! shift, unshift are much slower than pop, push
+// WHY? 기존의 데이터 또한 이동이 되기 때문이다. 배열이 클수록 속도가 느려진다.
+
+// splice: remove an item by index position
+fruits.push('🍓', '🍑', '🍋');
+console.log(fruits);
+
+//fruits.splice(1); 로 작성하면, 인덱스 1부터 모든 데이터 제거
+fruits.splice(1, 1); // 인덱스 1부터 1개 데이터 제거
+console.log(fruits);
+
+fruits.splice(1, 0, '🍏', '🍉'); // 인덱스 1 부터 0개 제거한 뒤, 그 자리에 데이터 삽입 가능
+console.log(fruits);
+
+// concat: combine two arrays
+const fruits2 = ['🍐', '🥥'];
+const newFruits = fruits.concat(fruits2);
+console.log(newFruits);
+```
+
+## 5. Searching
+
+```jsx
+// indexOf: find the index
+console.log(fruits);
+console.log(fruits.indexOf('🍎')); // 0
+console.log(fruits.indexOf('🍉')); // 2
+console.log(fruits.indexOf('🥥')); // -1
+
+// includes
+console.log(fruits.includes('🍉')); // true
+console.log(fruits.includes('🥥')); // false
+
+// lastIndexOf
+fruits.push('🍎'); // 2번째 사과
+console.log(fruits);
+console.log(fruits.indexOf('🍎')); // 0, 첫번째로 확인되는 요소의 인덱스 반환
+console.log(fruits.lastIndexOf('🍎')); // 5, 가장 마지막에 확인되는 요소 인덱스를 반환
+console.log(fruits.lastIndexOf('🥥')); // -1
+```

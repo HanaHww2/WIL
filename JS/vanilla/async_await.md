@@ -1,0 +1,78 @@
+- promise를 chaining할 때, 동기식으로 작동하는 것처럼 보이게 도와주어 깔끔하게 사용할 수 있게 돕는다. 경우에 따라 필요시에 활용한다.
+- promise에 추가적인 옵션 사항을 주는 api
+    - proto_type 위에서 동작하는 클래스와 같이 syntactic sugar 중 하나이다.
+
+# 1. async
+
+- async 키워드를 명시함으로써 함수가 자동적으로 Promise 객체를 반환하게 한다.
+
+```jsx
+async function fetchUser() {
+  // do network reqeust in 10 secs....
+  return 'ellie';
+}
+
+const user = fetchUser();
+user.then(console.log); // Promise 객체를 콘솔에 출력한다.
+console.log(user); // ellie
+```
+
+# 2. await
+
+- await 키워드는 async 키워드가 붙은 함수 안에서만 사용이 가능하다.
+
+```jsx
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function getApple() { // async 키워드를 이용해 사과를 반환하는 프로미스 객체 반환
+  await delay(2000); // 딜레이가 끝날 때까지 기다린다.
+  return '🍎';
+}
+
+async function getBanana() { // 동기적 코드를 작성하듯이, 로직을 구현할 수 있다.
+  await delay(1000);
+  return '🍌';
+}
+// fucntion getBanana() { // 이와 같이 chaining을 통해 프로미스를 활용할 수 있다.
+//   return delay(3000)
+// 	 .then(()=> '🍌');
+// }
+
+async function pickFruits() {
+  const applePromise = getApple();
+  const bananaPromise = getBanana(); // 비동기적 동작을 병렬적으로 수행할 수 있다.
+  const apple = await applePromise;
+  const banana = await bananaPromise;
+  return `${apple} + ${banana}`; // 2초만에 함수가 처리된다.
+}
+// 프로미스를 중첩하여 사용하면 결국 콜백지옥과 유사해진다. 위와 같이 간결하게 작성 권장
+//function pickFruits() { 
+//   return getApple().then(apple => {
+//        return getBanana().then(banana => `${apple} + ${banana}`);
+//    });
+//}
+
+pickFruits().then(console.log);
+```
+
+# 3. useful APIs
+
+- 병렬적으로 동작이 가능한 프로미스를 이용하는 코드를 간결하게 작성이 가능하다.
+
+```jsx
+function pickAllFruits() {
+	// 프로미스 배열을 전달해 병렬적으로 수행하게 하며 결과를 다시 배열 형태로 반환한다.
+  return Promise.all([getApple(), getBanana()]).then(fruits =>
+    fruits.join(' + ')
+  );
+}
+pickAllFruits().then(console.log);
+
+function pickOnlyOne() {// 수행이 먼저 끝나는 프로미스 객체의 반환값만 가져온다.
+  return Promise.race([getApple(), getBanana()]);
+}
+
+pickOnlyOne().then(console.log);
+```

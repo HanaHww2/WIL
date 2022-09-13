@@ -1,0 +1,209 @@
+## 드림코딩 엘리 강의
+
+```jsx
+// Q1. make a string out of an array
+{
+  const fruits = ['apple', 'banana', 'orange'];
+  const result = fruits.join(','); // 콤마는 디폴트 구분자이므로 생략 가능하다.
+  console.log(result);
+}
+
+// Q2. make an array out of a string
+{
+  const fruits = '🍎, 🥝, 🍌, 🍒';
+  const result = fruits.split(','); // string API
+  console.log(result);
+}
+
+// Q3. make this array look like this: [5, 4, 3, 2, 1]
+{
+  const array = [1, 2, 3, 4, 5];
+  const result = array.reverse();
+  console.log(result);
+  console.log(array); // [5, 4, 3, 2, 1] 기존 배열의 순서도 변경된다.
+}
+
+// Q4. make new array without the first two elements
+{
+  const array = [1, 2, 3, 4, 5];
+	const result = array.slice(2, 5); // 지정한 범위 요소를 새로운 배열로 반환
+  console.log(result); // [3, 4, 5]
+  console.log(array); // [1, 2, 3, 4, 5]
+
+	// 참고) 기존 배열에서 일부 원소 제거하며 조작
+	const result = array.splice(0, 2); // 0~1 인덱스 요소를 반환하며 기존 배열에서 삭제
+	console.log(result); // [1, 2]
+  console.log(array);  // [3, 4, 5]
+}
+
+//---------------------
+// (Q5.~Q10.)
+class Student {
+  constructor(name, age, enrolled, score) {
+    this.name = name;
+    this.age = age;
+    this.enrolled = enrolled;
+    this.score = score;
+  }
+}
+const students = [
+  new Student('A', 29, true, 45),
+  new Student('B', 28, false, 80),
+  new Student('C', 30, true, 90),
+  new Student('D', 40, false, 66),
+  new Student('E', 18, true, 88),
+];
+
+// Q5. find a student with the score 90
+{
+  const result = students.find((student) => student.score === 90);
+	// 아래와 동일
+	// const result = students.find( function(student) {
+	//	return student.score === 90;
+	//});
+	console.log(result);
+}
+
+// Q6. make an array of enrolled students
+{
+  const result = students.filter((student) => student.enrolled);
+  console.log(result);
+}
+
+// Q7. make an array containing only the students' scores
+// result should be: [45, 80, 90, 66, 88]
+{
+  const result = students.map((student) => student.score);
+  console.log(result);
+}
+
+// Q8. check if there is a student with the score lower than 50
+{
+  const result = students.some((student) => student.score < 50);
+  console.log(result); // true
+
+  const result2 = !students.every((student) => student.score >= 50);
+  console.log(result2); // true
+}
+
+// Q9. compute students' average score
+{
+  const result = students.reduce((prev, curr) => prev.score + curr.score);
+	// 배열 요소들의 콜백 함수 수행 결과를 previous 값으로 전달하며, 순차적으로 누적하여 반환
+	// 참고) reduceRight 배열의 뒤쪽에서부터 반대방향으로 진행되는 reduce 함수
+  console.log(result / students.length);
+}
+
+// Q10. make a string containing all the scores
+// result should be: '45, 80, 90, 66, 88'
+{
+// 이러한 코딩을 함수형 프로그래밍이라고 한다.
+  const result = students
+    .map((student) => student.score)
+    // .filter((score) => score >= 50) 50점 이상만 출력하고자 할 때, 추가
+    .join();
+  console.log(result);
+}
+
+// Bonus! do Q10 sorted in ascending order
+// result should be: '45, 66, 80, 88, 90'
+{
+  const result = students
+    .map((student) => student.score)
+    .sort((a, b) => a - b) // 오름차순 정렬
+		// .sort((a, b) => b - a) 내림차순 정렬로 수정
+    .join();
+  console.log(result);
+}
+```
+
+# 부스트코스 크롱 강의
+
+- SPA(Single Page Application)가 대두되면서 프론트엔드에서 자료를 다루는 일이 증가하게 되었다.
+- 배열의 메소드들은 함수형 프로그래밍과도 연관이 되어있다.
+- JS는 인자로 함수를 받을 수 있고, 반환할 수 있다. 이를 활용한다.
+
+### 1. for vs forEach
+
+```jsx
+let data = [{title : "hello", content : "간지철철", price : 12000},
+            {title : "crong", content : "괜춘한 상품", price : 5500},
+            {title : "codesquad", content : "쩌는상품", price : 1200}];
+
+//1.
+for(let i=0; i<data.length; i++) {
+  console.log(data[i].title , data[i].price)
+}
+
+//2.
+data.forEach(function(v) {
+   console.log(v.title, v.price);
+});
+
+//3.
+function printElement(v) {
+	console.log(v.title, v.price);
+}
+data.forEach(printElement);
+```
+
+### 2. map, filter
+
+- map 메서드는 함수에서 정의한 방법대로 모든 원소를 가공해서 **새로운 배열**을 반환한다.
+
+```jsx
+let newData = data.map(function(v) {
+    return v.price * 1.1 ; //10% 가격을 인상!
+});
+
+let newData = data.map(function(v) {
+	let obj = { title: v.title, content: v.content, price: v.price*10}; 
+	return obj;
+});
+console.table(newData); // 객체의 값을 표 형태로 표현해준다.
+```
+
+- filter 메서드는 함수에서 정의한 조건에 맞는 원소만 추려서, 새로운 배열을 반환한다.
+
+```jsx
+let filteredData = data.filter(function(v) {
+    return v.price >= 5000;  // 5000원이상만 추출
+});
+```
+
+### 3. chaining
+
+```jsx
+// 5,000 이상의 값을 추출한 다음 정규표현식을 사용해서 '원'표현식으로 변경한 배열을 반환
+let filteredData = data.filter(function(v) {
+  return v.price > 5000;
+}).map(function(v) {
+	// 원본과 다른 새로운 객체 생성
+	let obj = { title: v.title,
+							content: v.content,
+							price: (''+v.price).replace(/^(\d+)(\d{3})$/, "$1,$2원") };
+  return obj;
+});
+```
+
+```jsx
+let filteredData = data.filter(function(v) {
+  return v.price > 5000;
+}).map(function(v) {
+  v.price = (''+v.price).replace(/^(\d+)(\d{3})$/, "$1,$2원");
+  // 원본의 price 값도 변경되며, 원본과 같은 객체를 가진 새로운 배열이 생성된다.
+	return v;
+});
+```
+
+### 4. reduce
+
+- reduce는 배열의 모든 요소에 대해 지정된 콜백 함수를 호출하며, 콜백 함수의 반환 값을 누적하여 반환하는 함수이다.
+- reduce 함수의 매개변수는 콜백 함수와 누적을 시작하기 위한 초기 값이며, 초기 값은 선택사항이다.
+
+```jsx
+let totalPrice = data.reduce(function(prevValue, product) { 
+															return prevValue + product.price; }, 0);
+
+console.log(totalPrice);
+```

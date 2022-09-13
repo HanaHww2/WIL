@@ -1,0 +1,77 @@
+- JavaScript는 사실 동기적이다!
+    - 호이스팅이 완료된 이후 코드 블럭이 순서대로 실행된다.
+        - hoisting : var, function declaration의 선언이 속한 블록의 가장 상단으로 끌어올려 진다.
+- 다른 언어에서는 서브루틴, 람다, 함수 포인터 등을 이용해 콜백을 구현하기도 한다.
+
+```jsx
+'use strict';
+
+console.log('1');
+setTimeout(() => console.log('2'), 1000);
+console.log('3');
+
+// Synchronous callback
+function printImmediately(print) {
+  print();
+}
+printImmediately(() => console.log('hello'));
+
+// Asynchronous callback
+function printWithDelay(print, timeout) {
+  setTimeout(print, timeout);
+}
+printWithDelay(() => console.log('async callback'), 2000);
+```
+
+```jsx
+// Callback Hell example
+// 콜백 함수를 계속해서 nesting하며 이어나가는 코드 
+class UserStorage {
+  loginUser(id, password, onSuccess, onError) {
+    setTimeout(() => {
+      if (
+        (id === 'ellie' && password === 'dream') ||
+        (id === 'coder' && password === 'academy')
+      ) {
+        onSuccess(id);
+      } else {
+        onError(new Error('not found'));
+      }
+    }, 2000);
+  }
+
+  getRoles(user, onSuccess, onError) {
+    setTimeout(() => {
+      if (user === 'ellie') {
+        onSuccess({ name: 'ellie', role: 'admin' });
+      } else {
+        onError(new Error('no access'));
+      }
+    }, 1000);
+  }
+}
+
+const userStorage = new UserStorage();
+const id = prompt('enter your id');
+const password = prompt('enter your passrod');
+userStorage.loginUser(
+  id,
+  password,
+  user => {
+    userStorage.getRoles(
+      user,
+      userWithRole => {
+        alert(
+          `Hello ${userWithRole.name}, you have a ${userWithRole.role} role`
+        );
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  },
+  error => {
+    console.log(error);
+  }
+);
+```

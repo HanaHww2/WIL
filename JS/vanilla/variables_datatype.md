@@ -1,0 +1,199 @@
+## 1. Variables
+
+- rw(read/write)
+- **let** (added in ES6)변수 선언 keyword!
+
+```jsx
+// Whole-script strict mode syntax
+// Use strict
+// added in ES 5
+// use this for Vanila Javascript
+'use strict';
+
+// var age; var hoisting으로 가장 상단으로 이동된 것과 같음
+console.log('Hello, world!')
+console.log(age);
+
+// global scope - 블록 안밖에서 모두 이용가능
+// 글로벌 변수는 application의 시작부터 끝까지 
+// 메모리가 할당되기 때문에 최소한으로 사용 권고
+// 대신 클래스, func, if, for loop 내에서 필요한 변수 선언하여 사용
+let globalName = 'global name';
+
+// block scope - 블록 밖에서는 블록 안의 내용에 접근 불가
+{
+    let name = 'hanah';
+    console.log(name);
+    name='hello';
+    console.log(name);
+    console.log(globalName);
+}
+
+console.log(name);
+console.log(globalName);
+
+// var (don't ever use this!)
+// 할당 전 출력 가능 - undefined(변수가 선언되었으나 값이 정의되지 않음) 로 출력됨
+console.log(age); 
+age = 4; // 선언 전에 값을 할당 가능
+console.log(age);
+var age;
+
+// has no block scope, 블록을 무시한다.
+{
+    years = 4; // 선언 전에 값을 할당 가능   
+    var years;
+}
+console.log(years); // 블록 외에서도 출력 가능
+
+// name = 4; 선언 전 할당으로 접근 불가 오류 발생
+// let name;
+```
+
+↔ **var (don't ever use this!)**
+
+- 유연성이 장점이 될수도 있으나, 규모가 큰 프로젝트에서는 문제가 발생할 소지가 다분하니(위험부담) 사용을 지양한다.
+- **var hoisting**
+    - move declaration from bottom to top
+    - 어디에서 변수를 선언했는지에 상관없이 선언된 스코프의 가장 위쪽으로 선언을 끌어 올려준다.
+
+## 2. Constant
+
+- r(read only)
+- 값이 바뀌지 않는 경우라면, const를 주로 사용할 것을 권장한다.
+
+```jsx
+const daysInWeek = 7;
+const maxNumber = 5;
+```
+
+❗주의!
+
+- Immutable data types
+    - primitive 타입과 frozen objects (i.e. object.freeze())는 Immutable하다.
+    - 원시 타입은 메모리에 바로 값이 저장되는 타입이기에, 저장된 데이터 자체를 따로 조작하는 것은 불가능하고, 변경이 필요하다면, 새로운 값을 메모리에 저장한다.
+- Mutable data types
+    - 모든 objects는 기본이 mutable이다.
+- favor immutable data type always for a few reasons:
+    - security
+    - thread safety
+    - reduce human mistakes
+
+## 3. Variable types
+
+- primitive(원시 타입), 메모리에 바로 값이 저장된다.
+    - single item: number, string, boolean, null, undefined, symbol
+- object(객체 타입), 참조 타입으로 메모리 주소(ref) 값을 갖는다.
+    - box container
+- function
+    - first-class function - 변수에 할당 가능, 함수 인자나 리턴 타입으로도 함수를 활용 가능
+
+```jsx
+// number type - 정수든 소숫점을 가지는 유리수든 "number" 타입으로 변수 선언됨
+const count = 17; // integer
+const size = 17.1; // float
+console.log(`value: ${count}, type: ${typeof count}`); 
+console.log(`value: ${size}, type: ${typeof size}`);
+
+// number - special numeric values: Infinity, -Infinity, NaN
+const infinity = 1/0;
+const negativeinfinity = -1/0;
+const nAn = 'not a number'/2;
+console.log(infinity);
+console.log(negativeinfinity);
+console.log(nAn);
+
+// bigint (fairly new, don't use it yet), over number type range(-2**53 ~ 2**53)
+// 지원이 안 되는 브라우저도 있음
+// 숫자 마지막에 "n"을 붙이면 bigInt 타입으로 할당된다.
+const bigInt = 1234567890123456789012345678901234567890n;
+console.log(`value: ${bigInt}, type: ${typeof bigInt}`)
+Number.MAX_SAFE_INTEGER;
+
+// string
+const char = 'c';
+const brendan = 'brendan';
+const greeting = 'hello ' + brendan;
+console.log(`value: ${greeting}, type: ${typeof greeting}`);
+
+// boolean
+// false: 0, null, undefined, NaN, ''
+// true: any other value
+const canRead = true;
+const test = 3 < 1; // false
+console.log(`value: ${canRead}, type: ${typeof canRead}`);
+console.log(`value: ${test}, type: ${typeof test}`);
+
+// null
+// null(empty 값)을 할당한다.
+let nothing = null; 
+console.log(`value: ${nothing}, type: ${typeof nothing}`);
+
+// undefined
+// 어떤 값도 할당되지 않은 상태
+let x; // let x = undefined;와 동일
+console.log(`value: ${x}}, type: ${typeof x}`);
+```
+
+- symbol
+    - create unique identifiers for objects
+    - 맵 혹은 다른 자료구조에서 고유한 식별자의 역할을 한다.
+    - 동시다발적으로, concurrent하게 시행되는 코드에서 우선순위를 주고 싶을 때, 고유 식별자 이용
+    - 다른 모듈이나 파일에서 동일한 string을 식별자로 사용한다면, 동일한 식별자로 간주되나, symbol 은 개별로 구분됨
+
+```jsx
+const symbol1 = Symbol('id');
+const symbol2 = Symbol('id');
+console.log(symbol1 === symbol2) // false
+
+// symbol.description 을 이용해 스트링으로 변환한 뒤 출력 가능
+console.log(`value: ${symbol1.description}, type: ${typeof symbol1}`) 
+
+// string이 같을 때, 동일한 식별자를 부여하고 싶은 경우
+const gSymbol1 = Symbol.for('id');
+const gSymbol2 = Symbol.for('id');
+console.log(gSymbol1 === gSymbol2); // true
+```
+
+- **template literals(string)**
+    - backtick 기호 안에서 ${}를 이용해 변수 값을 문자열과 함께 출력할 수 있다.
+
+```jsx
+// template literals 활용하여 빈칸, 문자열 변수를 포함하는 새 문자열 간편하게 생성 가능 
+const helloBob = `hi ${brendan}!`; 
+console.log(`value: ${helloBob}, type: ${typeof helloBob}`);
+console.log('value: ' + helloBob + ' type: ' + typeof helloBob);
+```
+
+## 3. Object
+
+- real-life object, data structure
+
+```jsx
+const hanah = { name: 'hanah', age: 30 }; // const 형이므로 해당 변수에 할당된 객체 자체는 바꿀 수 없지만
+console.log(hanah)
+hanah.age = 31; // 객체가 가진(참조하는) 변수들의 값은 변경이 가능하다
+console.log(hanah)
+```
+
+## 4. Dynamic typing: dynamically typed language
+
+- 변수 선언시 타입을 지정하지 않고, 동적으로 타입이 지정된다.
+- 타입이 런타임에서 쉽게 변경 가능하므로 런타임 중 예기치 못한 에러가 발생하는 경우가 많다.
+    - This is why TypeScript has been so popularized widely.
+        - TS = JS + Type
+            - TS는 바벨(TransCompiler)을 이용해서 다시 JS로 변환해주어야만, 브라우저가 이해할 수 있다.
+
+```jsx
+let text = 'hello'; // string
+console.log(text.charAt(0)); //h
+console.log(`value: ${text}, type: ${typeof text}`); 
+text = 1; // number
+console.log(`value: ${text}, type: ${typeof text}`);
+text = '7' + 5; // 문자열 + number -> 75, string (5를 string으로 형 변환)
+console.log(`value: ${text}, type: ${typeof text}`);
+text = '8' / '2'; // 4, number (/ 는 숫자의 연산자이므로, 각 string을 number로 형 변환)
+console.log(`value: ${text}, type: ${typeof text}`);
+
+console.log(text.charAt(0)); // number형이기에 타입 에러 발생
+```
