@@ -17,7 +17,7 @@ arr = [
 arr = [list(map(int, x.split(" "))) for x in arr]
 ###################################################################
 
-import collections
+import collections, copy
 import sys
 
 # n = int(sys.stdin.readline())
@@ -32,7 +32,7 @@ dx = [0, 0, 1, -1]
 
 
 def in_range(y, x):
-    if -1 < y < len(arr) and -1 < x < len(arr[0]):
+    if -1 < y < n and -1 < x < n:
         return True
     return False
 
@@ -42,7 +42,7 @@ def near_sea(y, x):
     for d in range(4):
         ny = y + dy[d]
         nx = x + dx[d]
-        if in_range(ny, nx) and is_sea(ny, nx):
+        if in_range(ny, nx) and arr[ny][nx] == 0:
             return True
     return False
 
@@ -50,51 +50,95 @@ def near_sea(y, x):
 # bfs 로직!
 # 처음엔 플래그를 두고 바다를 건넌 건지 확인해보려 했으나 실패
 # 다른 사람들의 풀이를 확인 -> 섬들을 먼저 숫자 등으로 구분 짓고, 바다를 건너는 거리를 계산하는 로직으로 구현
-def search(y, x):
-    # print(y, x, cnt)
-    global answer
+def divide(y, x, island):
+    queue = collections.deque()
+    outside = collections.deque()
+    queue.append((y, x))
+    if near_sea(y, x):
+        outside.append((y, x, arr[y][x]))
 
-    queue.append((y, x, False))
     while queue:
-        y, x, f = queue.popleft()
+        y, x = queue.popleft()
 
-        if arr[y][x] > answer:
-            continue
-
+        # 사방 체크
         for d in range(4):
             ny = y + dy[d]
             nx = x + dx[d]
 
-            if not in_range(ny, nx) or arr[ny][nx] == -1:
+            if not in_range(ny, nx):
                 continue
 
-            new_f = f
-            # 바다이고, 섬에서 출발한 경우, 거리 계산
-            if is_sea(ny, nx) and f:
-                temp = 2
-                if arr[y][x] != -1:
-                    temp = arr[y][x] + 1
-                if arr[ny][nx] == 0 or arr[ny][nx] > temp:
-
-                    arr[ny][nx] = temp
-
-            # 대륙이고,
+            # 1이면 큐에 담는다. 연결된 대륙 찾기
             if arr[ny][nx] == 1:
-                if f and arr[y][x] > 1:  # 바다를 건너 온 경우
-                    # 거리 최솟값 확인
-                    answer = min(answer, arr[y][x])
-                    print(answer)
-                    new_f = not f
-                else:
-                    # 바다를 인접한 경우
-                    if near_sea(y, x):
-                        new_f = True
-                arr[ny][nx] = -1  # 방문했음 표시
-
-            queue.append((ny, nx, new_f))
+                arr[ny][nx] = island[-1]
+                # visited[ny][nx] = True
+                queue.append((ny, nx))
+                if near_sea(ny, nx):  # 바다 근처면 체크
+                    outside.append((ny, nx, arr[ny][nx]))
+    return outside
 
 
-queue = collections.deque()
+def measure_overseas(src, copy_a, min_d):
+
+    queue = collections.deque()
+
+    while src:
+        y, x, start = src.popleft()
+        if copy_a[y][x] > min_d:
+            continue
+
+        # 사방 체크
+        for d in range(4):
+            ny = y + dy[d]
+            nx = x + dx[d]
+
+            if not in_range(ny, nx):
+                continue
+
+            # 바다에서 다른 대륙에 도착
+            if copy_a[y][x] > 0 and copy_a[ny][nx] < 0 and copy_a[ny][nx] != start:
+                print(copy_a[ny][nx])
+                min_d = min(min_d, copy_a[y][x])
+
+            # 바다면
+            if copy_a[ny][nx] == 0:
+                if copy_a[y][x] > 0:
+                    copy_a[ny][nx] = copy_a[y][x] + 1
+                else:  # 내륙에서 막 출발한 경우
+                    copy_a[ny][nx] = 1
+                    start = copy_a[y][x]
+                src.append((ny, nx, start))
+    return min_d
+
+
+def search(y, x):
+    # print(y, x, cnt)
+    global answer
+    island = []  # 섬 이름
+    name = 0
+    outside_l = []
+    # visited를 사용해서 이미 방문한 구역은
+    # 다시 방문하지 않게 할까 했는데 오히려 깔끔하지 못한 것 같아서 폐기
+    # visited = [[False] * n for _ in range(n)]
+    # print(all(list(map(all, visited))))
+    # while not all(list(map(all, visited))):
+
+    # 1 찾기
+    for i in range(n):
+        for j in range(n):
+            if arr[i][j] == 1:
+                name -= 1
+                island.append(name)
+
+                outside_l.append(divide(i, j, island))
+
+    # 바다와 인접한 대륙 탐험
+    while outside_l:
+        out = outside_l.pop()
+        temp = measure_overseas(out, copy.deepcopy(arr), answer)
+        answer = min(temp, answer)
+
+
 answer = 200
 search(0, 0)
 print(answer)

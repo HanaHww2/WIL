@@ -44,13 +44,13 @@ def is_melting(ny, nx):
     return False
 
 
-# 아래 작성 로직은 다른 사람 풀이를 참고하여 조금 변형했다.
+# 아래 작성 로직은 다른 사람 해설을 참고해 조금 변형한 것이다.
 # 1. 모서리이면서, 1이 아닌 경우 외부 공기 2라고 설정한다.
 # 2. 이 외부 공기와 닿은 공간은 모두 외부 공기로 갱신한다.
 # 3. 치즈를 순회하면서 외부 공기와 2개 이상 닿아 있으면
 # 4. 이를 삭제한다. time +1
 def set_env(y, x, visited):
-    queue.append((y, x))
+    # queue.append((y, x))
     melted = set()
 
     while queue:
@@ -87,6 +87,7 @@ def search(r, c):
     melted = {(r, c)}
 
     # 4번 로직 수행
+    # 더 이상 녹은 치즈가 없다면 종료
     while melted:
 
         cnt += 1
@@ -96,7 +97,7 @@ def search(r, c):
         for (y, x) in melted:
             arr[y][x] = 2  # 공기로 변경
             queue.append((y, x))
-        r, c = melted.pop()  # 녹은 치즈 위치에서 다시 시작
+        r, c = queue.popleft()  # 녹은 치즈 위치에서 다시 시작
         # 2 부터 다시 반복
         melted = set_env(r, c, visited)
 

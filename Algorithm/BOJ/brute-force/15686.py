@@ -24,13 +24,13 @@ for i in range(n):
 
 house = []
 chick = []
+
 for i in range(n):
     for j in range(n):
         if arr[i][j] == 1:
             house.append((i, j))
         elif arr[i][j] == 2:
             chick.append((i, j))
-
 
 def check_dist(chi, dist):
     for i, h in enumerate(house):
@@ -40,8 +40,6 @@ def check_dist(chi, dist):
     return dist
 
 # m 이하의 모든 조합을 고려
-
-
 def dfs(dist, opened, not_visited):
     global answer
     if opened > m:
@@ -52,7 +50,6 @@ def dfs(dist, opened, not_visited):
         # 마지막 매개변수를 전달하는 실수를 했다. (이 실수가 한 두번째가 아니다)
         # 고정된 크기의 조합, 순열을 구하는 로직과 이런 전체 조합, 순열을 구하는 로직을 한 번 정리해도 좋을 것 같다.
         dfs(check_dist(chi, dist[:]), opened + 1, not_visited[i+1:])
-
 
 answer = 50 * 101
 dist = [101]*len(house)
