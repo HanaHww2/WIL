@@ -1,3 +1,6 @@
+##################################
+# 로직이 흥미로워서 타인의 풀이를 퍼왔다.
+# https://www.acmicpc.net/source/43060869
 import sys
 
 IN = sys.stdin.readline
@@ -26,6 +29,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-##################################
-# 로직이 흥미로워서 타인의 풀이를 퍼왔다.
-# https://www.acmicpc.net/source/43060869
