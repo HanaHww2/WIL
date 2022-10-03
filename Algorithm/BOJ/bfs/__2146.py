@@ -54,9 +54,8 @@ def divide(y, x, island):
     queue = collections.deque()
     outside = collections.deque()
     queue.append((y, x))
-    # arr[y][x] = island[-1]
     if near_sea(y, x):
-        outside.append((y, x, island[-1]))
+        outside.append((y, x, arr[y][x]))
 
     while queue:
         y, x = queue.popleft()
@@ -75,17 +74,17 @@ def divide(y, x, island):
                 # visited[ny][nx] = True
                 queue.append((ny, nx))
                 if near_sea(ny, nx):  # 바다 근처면 체크
-                    outside.append((ny, nx, island[-1]))
+                    outside.append((ny, nx, arr[ny][nx]))
     return outside
 
 
-def measure_overseas(src, answer):
-    dist = [[0] * n for _ in range(n)]
+def measure_overseas(src, copy_a, min_d):
+
     queue = collections.deque()
 
     while src:
         y, x, start = src.popleft()
-        if dist[y][x] > answer:
+        if copy_a[y][x] > min_d:
             continue
 
         # 사방 체크
@@ -97,18 +96,19 @@ def measure_overseas(src, answer):
                 continue
 
             # 바다에서 다른 대륙에 도착
-            if arr[y][x] == 0 and arr[ny][nx] < 0 and arr[ny][nx] != start:
-                answer = min(answer, dist[y][x])
+            if copy_a[y][x] > 0 and copy_a[ny][nx] < 0 and copy_a[ny][nx] != start:
+                print(copy_a[ny][nx])
+                min_d = min(min_d, copy_a[y][x])
 
             # 바다면
-            if arr[ny][nx] == 0:
-                if dist[ny][nx] == 0 or (
-                    dist[ny][nx] != 0 and dist[ny][nx] > dist[y][x] + 1
-                ):
-                    dist[ny][nx] = dist[y][x] + 1
-
-                if dist[ny][nx] < answer:
-                    src.append((ny, nx, start))
+            if copy_a[ny][nx] == 0:
+                if copy_a[y][x] > 0:
+                    copy_a[ny][nx] = copy_a[y][x] + 1
+                else:  # 내륙에서 막 출발한 경우
+                    copy_a[ny][nx] = 1
+                    start = copy_a[y][x]
+                src.append((ny, nx, start))
+    return min_d
 
 
 def search(y, x):
@@ -117,6 +117,11 @@ def search(y, x):
     island = []  # 섬 이름
     name = 0
     outside_l = []
+    # visited를 사용해서 이미 방문한 구역은
+    # 다시 방문하지 않게 할까 했는데 오히려 깔끔하지 못한 것 같아서 폐기
+    # visited = [[False] * n for _ in range(n)]
+    # print(all(list(map(all, visited))))
+    # while not all(list(map(all, visited))):
 
     # 1 찾기
     for i in range(n):
@@ -130,7 +135,8 @@ def search(y, x):
     # 바다와 인접한 대륙 탐험
     while outside_l:
         out = outside_l.pop()
-        measure_overseas(out, answer)
+        temp = measure_overseas(out, copy.deepcopy(arr), answer)
+        answer = min(temp, answer)
 
 
 answer = 200
