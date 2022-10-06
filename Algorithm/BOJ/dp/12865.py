@@ -20,17 +20,14 @@ def packing():
         w, v = b
 
         if w > k:  # 정렬 수행한 경우
-            return print(dp[1][-1])
+            return print(dp[i][-1])
 
         # 테이블을 다 채워야 한다! w 부터 시작해서 틀림 x
         for j in range(1, k + 1):
             if j < w:
                 dp[i + 1][j] = dp[i][j]
                 continue
-            # b를 추가할 수 있는 경우에
-            # val = 0
-            # if j % w == 0:
-            #     val += v
+
             dp[i + 1][j] = max(
                 dp[i][j], v + dp[i][j - w]
             )  ### 짐은 한번만 담을 수 있다; ㅠ dp[i + 1][j - w]는 불가능

@@ -10,7 +10,7 @@ for i in range(n):
     arr.append(list(int(x) for x in sys.stdin.readline().split(" ")))
 
 move = [(1, 0), (0, 1), (1, 1)]
-dp = [[0] * m for _ in range(n)]
+dp = [[0] * (m + 1) for _ in range(n + 1)]
 
 # 참고 https://resilient-923.tistory.com/293
 for i in range(1, n + 1):
