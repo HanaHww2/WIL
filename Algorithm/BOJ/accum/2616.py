@@ -1,3 +1,5 @@
+# https://www.acmicpc.net/problem/2616
+# 소형 기관차
 from itertools import accumulate
 import sys
 

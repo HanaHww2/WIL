@@ -34,5 +34,4 @@ def packing():
 
     return print(dp[-1][-1])
 
-
 packing()
