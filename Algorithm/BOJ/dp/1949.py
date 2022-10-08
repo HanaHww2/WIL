@@ -3,6 +3,7 @@
 
 import sys, collections
 
+sys.setrecursionlimit(10**6)
 n = int(sys.stdin.readline())
 
 arr = [0] + list(map(int, sys.stdin.readline().split(" ")))
