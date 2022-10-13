@@ -1,7 +1,7 @@
 # 트리와 쿼리
 # https://www.acmicpc.net/problem/15681
 import sys, collections
-
+sys.setrecursionlimit(10**6)
 n, r, q = map(int, sys.stdin.readline().split(" "))
 
 table = collections.defaultdict(list)

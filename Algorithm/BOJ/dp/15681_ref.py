@@ -1,5 +1,7 @@
 # 트리와 쿼리
-# https://www.acmicpc.net/problem/15681
+# https://www.acmicpc.net/source/25268194
+# 반복문으로 dfs
+# 참고용으로 긁어온 풀이
 import sys
 
 input = sys.stdin.readline
