@@ -6,7 +6,7 @@
 - When allowCredentials is true, allowedOrigins cannot contain the special value "*" since that cannot be set on the "Access-Control-Allow-Origin" response header.
 
   - 명쾌한 에러 메시지
-  - 테스트 프로파일이라 간단히 "*" 와일드카드로 지정해두었습니다만, 크레덴셜 옵션 설정으로 인해 오류가 발생
+  - 테스트 프로파일이라 간단히 "*" 와일드카드로 지정해두었으나, 크레덴셜 옵션 설정으로 인해 오류가 발생
   - 해결을 위 'http://localhost:3000' 와 같이 허용 주소를 지정
 
     <img width="342" alt="image" src="https://user-images.githubusercontent.com/62924471/206464131-0a7e7004-8334-4120-8e0d-94bb77884a79.png">
@@ -17,7 +17,7 @@
 
 - Invalid CSRF token found for http://localhost/api/v1/categories/3
   - 명백한 로그 메세지
-  - csrf 토큰은 프로젝트에서 활용하지 않을 예정이므로 일단 SecurityConfig 파일에 이에 대한 설정을 작성하는 것으로 해결
+  - csrf 토큰은 프로젝트에서 활용하지 않을 예정(session 방식이 아닌 jwt 토큰 방식으로 구현 예정이기 때문)이므로 일단 SecurityConfig 파일에 이에 대한 설정을 작성하는 것으로 해결
   - csrf 토큰을 활용하는 경우라면 아래와 같이 테스트 코드 작성 가능
   
     ```java
