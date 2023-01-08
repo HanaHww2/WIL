@@ -1,3 +1,10 @@
+## contents
+- [도커 / 도커 컴포즈 기본](./basic.md)
+- [도커로 젠킨스 설치해보기](./install-jenkins.md)
+- [vm에 도커 설치해보기](./install-vm.md)
+
+## Docker?
+
 ### 간단 인프라 역사
 
 - 과거 Bare Metal 환경
@@ -34,8 +41,3 @@
     - 리눅스 커널의 Storage, Namespaces, Networking 기능들을 도커 컨테이너 플랫폼에서 사용할 수 있게 컨테이너 엔진이 지원한다.
 - 윈도우와 Mac OS에서는 시스템의 Hypervisor를 활성화 시켜 리눅스 커널 기능을 지원하고 그 위에서 컨테이너를 구동한다.
     - 실제 현업에서는 Hypervisor를 이용할 필요 없이 리눅스 기반으로 서비스를 운영한다.
-
-#### contents
-- ![도커 / 도커 컴포즈 기본](./basic.md)
-- ![도커로 젠킨스 설치해보기](./install-jenkins.md)
-- ![vm에 도커 설치해보기](./install-vm.md)
