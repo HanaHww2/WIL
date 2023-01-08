@@ -11,7 +11,16 @@ docker ps -a # 설치된 전체 컨테이너 조회
 
 docker start
 ```
+### 도커 컨테이너 내부 Bash 접속
+```
+docker exec -it {컨테이너명} bash
+```
+- exec은 실행 중인 컨테이너를 다루는 명령어이다.
 
+### 도커 로그 보기
+```bash
+sudo docker logs jenkins # 로그 보기
+```
 ### Dockerfile 예시
 ```Dockerfile
 FROM node:16.13.2
@@ -42,11 +51,21 @@ docker build . -t {}
 docker build -f {도커파일명} .
 ```
 
-### 도커 컨테이너 내부 Bash 접속
+## 환경변수 설정
 ```
-docker exec -it {컨테이너명} bash
+# in Dockerfile
+ENV {환경변수명}={환경변수값}
+
+# bash 명령어
+-e {환경변수명}={환경변수값}
+
+# 설정할 환경변수가 많다면 .env 파일을 생성해 활용한다.
+# 와 같이 나열해서 설정할 수 있다.
+{환경변수명}={환경변수값}
+
+# 명령어에 파일 정보를 전달한다
+--env-file ./.env
 ```
-- exec은 실행 중인 컨테이너를 다루는 명령어이다.
 
 ## 도커의 이미지 레이어
 - Dockerfile을 이용할 때, 각 line 마다 이미지 레이어를 갖게 되고, 이 각 명령어 결과물은 캐싱이 된다.
@@ -75,26 +94,9 @@ docker run -e CHOKIDAR_USEPOLLING=true -v $(pwd)/src:/app/src -d -p 3000:3000 --
 docker run -e CHOKIDAR_USEPOLLING=true -v ${pwd}\src:/app/src:ro -d -p 3000:3000 --name {컨테이너명} {이미지명}
 ```
 
-## 환경변수 설정
-```
-# in Dockerfile
-ENV {환경변수명}={환경변수값}
-
-# bash 명령어
--e {환경변수명}={환경변수값}
-
-# 설정할 환경변수가 많다면 .env 파일을 생성해 활용한다.
-# 와 같이 나열해서 설정할 수 있다.
-{환경변수명}={환경변수값}
-
-# 명령어에 파일 정보를 전달한다
---env-file ./.env
-```
-
 ## Dockerfile STAGE 설정
 
-
-## Docker-compose
+# Docker-compose
 - docker-compose.yml 파일을 생성해 필요한 명령을 작성한다.
 - docker-compose 명령어를 활용한다.
   - 🚩 **`docker compose`** 는 다른 명령어이므로 유의한다.
@@ -153,6 +155,10 @@ services:
 - [docker/docker-compose/nginx-react](https://www.youtube.com/watch?v=3xDAU5cvi5E&t=4365s)
   - 기초를 쌓기에 좋은 강의
 
+### WSL 리눅스 OS에서 도커 활용하기
+- https://docs.microsoft.com/ko-kr/windows/wsl/tutorials/wsl-containers
+- 위 공식 문서 링크를 참고해 도커 데스크탑에서 설정만 해두면 된다! (다 해주는 WSL 덕에 편리해진다...)
+
 ### 우분투에서 도커 설치하기
 - 공식 홈페이지 튜토리얼이 베스트/필수
 ```bash
@@ -169,7 +175,3 @@ sudo usermod -aG docker {호스트명}
 
 #### 참고자료
 - [초보를 위한 도커 안내서-subicura님](https://subicura.com/2017/01/19/docker-guide-for-beginners-2.html)
-
-### WSL 리눅스 OS에서 도커 활용하기
-- https://docs.microsoft.com/ko-kr/windows/wsl/tutorials/wsl-containers
-- 위 공식 문서 링크를 참고해 도커 데스크탑에서 설정만 해두면 된다! (다 해주는 WSL 덕에 편리해진다...)
