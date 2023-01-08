@@ -5,7 +5,9 @@
 
 ## Docker?
 
-### 간단 인프라 역사
+## 인프라 환경 비교
+
+![image](https://user-images.githubusercontent.com/62924471/211206191-7017e5a1-55d9-48fb-942f-91294cb8b5a2.png)
 
 - 과거 Bare Metal 환경
 - Virtualization(가상화) 환경
@@ -27,13 +29,7 @@
 - Application을 운영하기 위해 필요한 환경을 담고 있는 독립된 공간을 말한다.
     - 라이브러리, 소프트웨어 플랫폼 등을 포함한다.
 
-## Hypervisor
-
-- vmware, virtual box, kvm, 젠서버 등의 Hypervisor 프로그램이 존재한다.
-- 가상 머신(컴퓨터)을 생성할 수 있게 지원한다.
-    - 하드웨어적으로는 분리되지 않았으나, 소프트웨어적으로 구분된 가상 머신
-
-## 리눅스
+## 리눅스 환경
 - 컨테이너는 "리눅스 커널 기능"을 이용해 만들어졌기 때문에 리눅스 환경이 필요하다.
     - chroot : 독립된 공간 형성
     - namespace : 독립적으로 형성된 공간 내 6가지 isolate 기능 지원
@@ -41,3 +37,9 @@
     - 리눅스 커널의 Storage, Namespaces, Networking 기능들을 도커 컨테이너 플랫폼에서 사용할 수 있게 컨테이너 엔진이 지원한다.
 - 윈도우와 Mac OS에서는 시스템의 Hypervisor를 활성화 시켜 리눅스 커널 기능을 지원하고 그 위에서 컨테이너를 구동한다.
     - 실제 현업에서는 Hypervisor를 이용할 필요 없이 리눅스 기반으로 서비스를 운영한다.
+
+## Hypervisor
+
+- vmware, virtual box, kvm, 젠서버 등의 Hypervisor 프로그램이 존재한다.
+- 가상 머신(컴퓨터)을 생성할 수 있게 지원한다.
+    - 하드웨어적으로는 분리되지 않았으나, 소프트웨어적으로 구분된 가상 머신
