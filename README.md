@@ -9,6 +9,8 @@ It's personal note about Everything I learned.
 
 ## Database
 - [트랜잭션](./dbms/transaction.md)
+- [index](./index.md)
+- [mysql-index](./index-mysql.md)
 
 ## Network
 - [HTTP/HTTPS](./network/http-https.md)
