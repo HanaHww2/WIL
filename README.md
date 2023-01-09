@@ -8,12 +8,12 @@ It's personal note about Everything I learned.
 ---
 
 ## Database
-- [트랜잭션](./dbms/transaction.md)|
+- [트랜잭션](./dbms/transaction.md)
 
 ## Network
-- [HTTP/HTTPS](./network/http-https.md)|
-- [네트워크 계층(Network layer)](./Network/network-layer-hanah.md)|
-- [IP protocol](./Network/ip_protocol.md)|
+- [HTTP/HTTPS](./network/http-https.md)
+- [네트워크 계층(Network layer)](./Network/network-layer-hanah.md)
+- [IP protocol](./Network/ip_protocol.md)
 
 ## OS
 - [concurrency](./OperatingSystem/concurrency.md)
@@ -24,7 +24,7 @@ It's personal note about Everything I learned.
 - [virtualMemory2](./OperatingSystem/virtualMemory2.md)
 
 ## DataStructure
-- [DataStructure](./DataStructure)|
+- [DataStructure](./DataStructure)
 
 ## Algorithm
 
