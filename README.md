@@ -32,4 +32,4 @@ It's personal note about Everything I learned.
 ## Algorithm
 
 ## Dev
-- [Docker/docker-compose](./main/Dev/docker)
+- [Docker/docker-compose](./Dev/docker)
