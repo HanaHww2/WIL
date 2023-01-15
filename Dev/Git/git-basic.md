@@ -40,7 +40,6 @@ git commit --amend
 #### 🧨rebase 사용시 주의사항
 - 커밋 히스토리에서 머지 이력이 삭제된다.
   - 즉, 커밋 로그가 깔끔하게? 정리가 된다.
-  - 이걸 뭐라고 하더라... squash 인가?
   
 ## 루트 디렉토리 변경을 원할 때
 
@@ -117,6 +116,8 @@ git rebase upstream/develop
 git cherry-pick {특정 커밋의 해시값}
 ```
 - 현재 브랜치에 원하는 커밋만 가져올 수 있다.
+
+## squash
 
 #### 참고 자료
 - https://backlog.com/git-tutorial/kr/stepup/stepup7_4.html
