@@ -1,5 +1,5 @@
 # Git CheatSheet를 만들어보자!
-### 브랜치 만들고 이동하기
+## 브랜치 만들고 이동하기
 ```bash
 git branch # 현재 있는 브랜치 확인
 git checkout -b <만들고 싶은 브랜치명>
@@ -11,7 +11,7 @@ git checkout main # main 브랜치로 이동
 git merge <머지하고 싶은 브랜치> # 머지한 뒤에도 브랜치는 유지된다.
 ```
 
-### 푸쉬한 이력을 지우고 수정을 원할 때
+## 푸쉬한 이력을 지우고 수정을 원할 때
 
 ```bash
 git reset <복구하길 원하는 커밋의 해시값>
@@ -21,7 +21,7 @@ git push -f
 - 다른 사람이 이미 pull한 경우에는 사용해서는 안 된다. 
 - 혹은 혼자 관리하는 레포지토리인 경우에만 사용한다.
 
-### 커밋 메세지를 수정하고 싶을 때
+## 커밋 메세지를 수정하고 싶을 때
 #### 최근 커밋이 아닌 과거 커밋 경우
 ```bash
 git rebase -i <수정하길 원하는 커밋 이전 커밋 해시값>
@@ -36,8 +36,13 @@ git commit --amend
 ```
 #### 푸시한 경우
 - 완료 후 `git push -f` 명령어를 통해 원격 레포에 강제 수정을 진행한다.
+
+#### 🧨rebase 사용시 주의사항
+- 커밋 히스토리에서 머지 이력이 삭제된다.
+  - 즉, 커밋 로그가 깔끔하게? 정리가 된다.
+  - 이걸 뭐라고 하더라... squash 인가?
   
-### 루트 디렉토리 변경을 원할 때
+## 루트 디렉토리 변경을 원할 때
 
 예를 들어, 여러 레포지토리를 하나로 합치고 싶은 경우
 
@@ -63,5 +68,55 @@ git commit --amend
     ```
     
 
-### 레포지토리 내 서브 디렉토리를 새로운 레포로 만들고 싶을 때
+## 레포지토리 내 서브 디렉토리를 새로운 레포로 만들고 싶을 때
 
+## 원격 브랜치를 로컬로 가져오기
+
+#### 원격 레포 업데이트 하기
+```bash
+git remote update
+```
+#### 브랜치 조회하기
+```bash
+git branch # 로컬 브랜치 목록 조회
+git branch -a # 전체 브랜치 목록 조회
+git branch -r # 원격 브랜치 목록 조회
+```
+#### 리모트 브랜치를 로컬에 가져와 브랜치 로컬 만들기
+```bash
+# 리모트 브랜치 명으로 로컬 내 브랜치 생성
+git checkout -t [remote-branch-name]
+
+# 로컬 브랜치 명을 따로 지정하고 싶은 경우
+git checkout -b [생성할 branch 이름] [원격 저장소의 branch 이름]
+```
+
+#### 리모트 브랜치 참고만 하는 경우
+```bash
+git checkout [remote-branch-name]
+```
+- 아무런 옵션없이 원격 저장소의 branch를 checkout 하면 `detached HEAD` 상태로 체크아웃된다.
+- 소스를 보고 변경 해볼 수도 있지만 변경사항들은 commit, push 할 수 없으며 다른 branch로 checkout하면 사라진다.
+
+#### 참고 자료
+- https://cjh5414.github.io/get-git-remote-branch/
+- https://yeniful.tistory.com/57
+
+# git-flow 전략 관련
+## rebase
+```bash
+# 업스트림 레포가 따로 존재하는 경우, 풀리퀘를 머지할 브랜치(develop) 기준
+git fetch upstream
+git rebase upstream/develop
+```
+- 리베이스를 수행함으로써, 커밋 그래프를 깔끔하게 유지할 수 있다.
+- git-flow 전략을 위해 활용
+
+## 체리 픽 cherry-pick
+```bash
+git cherry-pick {특정 커밋의 해시값}
+```
+- 현재 브랜치에 원하는 커밋만 가져올 수 있다.
+
+#### 참고 자료
+- https://backlog.com/git-tutorial/kr/stepup/stepup7_4.html
