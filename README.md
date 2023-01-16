@@ -8,12 +8,12 @@ It's personal note about Everything I learned.
 ---
 
 ## Database
-- [트랜잭션](./dbms/transaction.md)
-- [index](./index.md)
-- [mysql-index](./index-mysql.md)
+- [트랜잭션](./DBMS/transaction.md)
+- [index](./DBMS/index.md)
+- [mysql-index](./DBMS/index-mysql.md)
 
 ## Network
-- [HTTP/HTTPS](./network/http-https.md)
+- [HTTP/HTTPS](./Network/http-https.md)
 - [네트워크 계층(Network layer)](./Network/network-layer-hanah.md)
 - [IP protocol](./Network/ip_protocol.md)
 - [ICMP](./Network/icmp.md)
@@ -29,7 +29,7 @@ It's personal note about Everything I learned.
 ## DataStructure
 - [DataStructure](./DataStructure)
 
-## Algorithm
-
 ## Dev
 - [Docker/docker-compose](./Dev/docker)
+
+## Algorithm
