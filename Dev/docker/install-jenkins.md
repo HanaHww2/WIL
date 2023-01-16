@@ -78,3 +78,7 @@ services:
 #### 참고자료
 - https://postlude.github.io/2020/12/26/docker-in-docker/
 - https://bitgadak.tistory.com/3
+
+#### 최종 결론
+- 진짜 결론: 젠킨스를 설치까지 했으나, 로컬에서 서버를 만들려면 포트 포워딩이 필요하고, 항상 컴퓨터를 켜두기 힘들다는 점,   
+그리고 ec2 프리티어에 추가로 젠킨스 서버를 올리기엔 부담이 된다는 점(그냥 심적으로)을 이유로 github-action을 활용하는 것으로 결정했다.
