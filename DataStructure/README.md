@@ -8,7 +8,7 @@
 3. [Linked List 연결리스트](java-ds-3.%20linked-list.md)
 4. [Hash 해쉬](java-ds-4.%20hash.md)
 5. [Tree 트리](java-ds-5.%20tree.md)
-6. [BST 이진 탐색 트리](java-ds-6.%20bst.md - 이하 구현 코 보충 예정
+6. [BST 이진 탐색 트리](java-ds-6.%20bst.md) - 이하 구현 드드 보충 예정
 7. [AVL Tree 자기균형 트리](java-ds-7.%20avl-tree.md)
 8. [RB Tree 적흑 트리](java-ds-8.%20red-black-tree.md)
 
