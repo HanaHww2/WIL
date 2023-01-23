@@ -36,3 +36,19 @@
 - https://velog.io/@franc/Gradle-%EA%B8%B0%EB%B3%B8%EC%82%AC%EC%9A%A9%EB%B2%95
 - https://ivvve.github.io/2019/07/12/java/ETC/different-jdk-build/
 - http://daplus.net/java-gradle%EC%97%90-%ED%8A%B9%EC%A0%95-jdk-%EB%B2%84%EC%A0%84%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8F%84%EB%A1%9D%ED%95%98%EB%A0%A4%EB%A9%B4-%EC%96%B4%EB%96%BB%EA%B2%8C%ED%95%B4%EC%95%BC/
+
+# 시스템 프로퍼티 전달방식
+```bash
+# 액티브할 프로파일 옵션 직접 전달
+test {
+    systemProperty("spring.profiles.active", "test")
+    // ...
+}
+
+# 명령어 혹은 외부에서 전달
+# e.g. gradlew clean build -PspringProfiles=ci
+test {
+    systemProperty("spring.profiles.active", project.properties.get("springProfiles"))
+    // ...
+}
+```

@@ -3,11 +3,15 @@
 ### What I Learned
 
 It's personal note about Everything I learned.
-(현재 노션, 로컬 등에 작성해둔 문서들을 깃헙으로 이전 중입니다.)
+현재 노션, 로컬 등에 작성해둔 문서들을 깃헙으로 이전 중입니다.
 
 ---
-
-## Database
+## Algorithm
+- [알고리즘](./Algorithm)
+  
+## DataStructure
+- [자료구조](./DataStructure)
+## DBMS
 - [트랜잭션](./DBMS/transaction.md)
 - [index](./DBMS/index.md)
 - [mysql-index](./DBMS/index-mysql.md)
@@ -26,10 +30,5 @@ It's personal note about Everything I learned.
 - [virtualMemory](./OperatingSystem/virtualMemory.md)
 - [virtualMemory2](./OperatingSystem/virtualMemory2.md)
 
-## DataStructure
-- [DataStructure](./DataStructure)
-
-## Dev
+## Tool
 - [Docker/docker-compose](./Dev/docker)
-
-## Algorithm
