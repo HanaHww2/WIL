@@ -211,7 +211,7 @@ do {
 
 ## 데커 알고리즘
 
-테오도뤼스 데커가 제안한 알고리즘으로, 임계구역 해결의 세 가지 조건을 모두 소프트웨어적으로 만족하는 알고리즘이다.
+테오도뤼스 데커가 제안한 알고리즘으로, 임계구역 해결의 세 가지 조건을 모두 소프트웨어적으로 만족하는 알고리즘이다.  
 피터슨 알고리즘과 마찬가지로 busy-waiting 문제와 2개 이상의 프로세스에 적용하려면 변수를 추가해야 하고, 알고리즘의 구현이 복잡해진다는 문제점을 갖는다.
 
 ```c
@@ -305,6 +305,8 @@ V(S):
 ```
 
 # 모니터 Monitor
+![](./image/MonitorConditions.jpg)
+![운영체제 공룡책, 주니온 강의 자료](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0a165659-83ba-4975-84b9-9504158638a2/5_17_MonitorConditions.jpg)
 
 세마포어는 코딩하기 까다롭고, 디버깅이 어려우며, 한 번의 실수로 인해 치명적 영향을 끼칠 수 있다는 문제점을 갖는데 모니터가 이를 해결한다.
 
@@ -350,8 +352,6 @@ monitor monitor-name
 }
 ```
 
-![운영체제 공룡책, 주니온 강의 자료](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0a165659-83ba-4975-84b9-9504158638a2/5_17_MonitorConditions.jpg)
-
 위 그림과 같이 프로세스가 모니터 내부에서 대기할 수 있도록 condition variable 을 제공한다.
 
 ```c
@@ -370,12 +370,12 @@ x.signal();
 
 임계구역과 관련된 전통적인 문제 중 하나이다.  
 
-![kocw 반효경 교수님 ppt](./image/hana/bounded-buffer.png)
+![kocw 반효경 교수님 ppt](./image/bounded-buffer.png)
 
-생산자 프로세스와 소비자 프로세스는 서로 독립적으로 작업을 한다.
-생산자 프로세스는 데이터를 생성해 버퍼에 넣는 작업을 한다. input(buf)
-소비자 프로세스는 데이터를 버퍼에서 가져와서 소비한다. output(buf)
-버퍼는 작업을 계속하기 위해 원형 버퍼circular buffer 를 사용하며, 버퍼의 상태를 확인하기 위해서 sum이라는 전역 변수를 사용한다.
+- 생산자 프로세스와 소비자 프로세스는 서로 독립적으로 작업을 한다.  
+- 생산자 프로세스는 데이터를 생성해 버퍼에 넣는 작업을 한다.   
+- input(buf) 소비자 프로세스는 데이터를 버퍼에서 가져와서 소비한다.   
+- output(buf) 버퍼는 작업을 계속하기 위해 원형 버퍼circular buffer 를 사용하며, 버퍼의 상태를 확인하기 위해서 sum이라는 전역 변수를 사용한다.
 
 ```c
 // 세마포어를 이용한 해결법
@@ -440,7 +440,7 @@ monitor bounded_buffer
 ```
 
 ## 생각하는 철학자들의 식사
-![](./image/hana/MonitorConditions.jpg)  
+![](./image/dining-philosopher.png)
 출처 : [https://devowen.com/248](https://devowen.com/248)
 
 ```c
