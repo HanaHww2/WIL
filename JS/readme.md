@@ -14,7 +14,7 @@
 - [12. object_oriented_class](./vanilla/object_oriented_class.md)
 - [13. objectliteral_this](./vanilla/objectliteral_this.md)
 
-### 참고 
+### 참고 강의
 - [드림코딩 엘리님 JS 기초 강의](https://www.youtube.com/playlist?list=PLv2d7VI9OotTVOL4QmPfvJWPJvkmv6h-2)
 - [부스트코스 윤지수님 풀스택 강의](https://www.boostcourse.org/web316/joinLectures/12943)
 
