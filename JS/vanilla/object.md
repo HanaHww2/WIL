@@ -1,3 +1,9 @@
+# Object
+- one of the JavaScript's data types.
+- a collection of related data and/or functionality.
+- Nearly all objects in JavaScript are instances of Object
+- object = { key : value };
+
 ## 1. Literals and properties
 
 ```jsx
@@ -135,10 +141,10 @@ console.log(mixed.color); // blue
 console.log(mixed.size); // big
 ```
 
-# +) 추가
 
-출처
-
+## +) 추가
+TODO
+### 출처
 - [https://www.boostcourse.org/web316/lecture/16795?isDesc=false](https://www.boostcourse.org/web316/lecture/16795?isDesc=false)
 - [https://www.youtube.com/watch?v=cTR00wW-kZo&list=PLuHgQVnccGMAMctarDlPyv6upFUUnpSO3&index=8&t=11s](https://www.youtube.com/watch?v=cTR00wW-kZo&list=PLuHgQVnccGMAMctarDlPyv6upFUUnpSO3&index=8&t=11s)
 
