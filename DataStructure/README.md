@@ -1,3 +1,18 @@
+# 자바로 구현하고 배우는 자료구조
+- [자바로 구현하고 배우는 자료구조](https://www.boostcourse.org/cs204)
+- 부스트코스에서 제공하는 강의를 통해 학습하고 정리한 내용을 기록합니다.
+
+0. [자바 자료구조 기본](java-ds-0.%20introduce.md)
+1. [자료 구조 경계 조건](java-ds-1.%20boundary-conditions.md)
+2. [Arrays 배열](java-ds-2.%20arrays.md)
+3. [Linked List 연결리스트](java-ds-3.%20linked-list.md)
+4. [Hash 해쉬](java-ds-4.%20hash.md)
+5. [Tree 트리](java-ds-5.%20tree.md)
+6. [BST 이진 탐색 트리](java-ds-6.%20bst.md - 이하 구현 코 보충 예정
+7. [AVL Tree 자기균형 트리](java-ds-7.%20avl-tree.md)
+8. [RB Tree 적흑 트리](java-ds-8.%20red-black-tree.md)
+
+---
 # ADT(Abstract Data Type, 추상 자료형) 구현 방식
 - 자료구조는 크게 **메모리 공간 기반의 연속Contiguous 방식**과 **포인터 기반의 연결Link 방식**으로 나뉜다.
 - 흔히 말하는 배열은 정적인 크기로 연속된 메모리 공간을 할당받는 연속 방식에 속한다.
@@ -36,12 +51,3 @@
 #### 트라이 Trie
 - 자연어 처리 분야에서 문자열 탐색을 위해 널리 쓰이는 자료구조이다.
 
----
-# 자바로 구현하고 배우는 자료구조
-- [자바로 구현하고 배우는 자료구조](https://www.boostcourse.org/cs204)
-- 부스트코스에서 제공하는 강의를 통해 학습하고 정리한 내용을 기록합니다.
-
-0. [자바 자료구조 기본](java-ds-0.%20introduce.md)
-1. [자료 구조 경계 조건](java-ds-1.%20boundary-conditions.md)
-2. [Arrays 배열](java-ds-2.%20arrays.md)
-3. [Linked List 연결리스트](java-ds-3.%20linked-list.md)
