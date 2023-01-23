@@ -1,16 +1,10 @@
-# 참고
-
-[알고리즘 ) Red-Black Tree](https://zeddios.tistory.com/237)
-
-[Red/Black Tree](https://www.cs.usfca.edu/~galles/visualization/RedBlack.html)
-
 # **Red Black Tree**
 
 레드 블랙 트리는 **자가 균형 이진 탐색 트리**로서, AVL 트리처럼 스스로 균형을 잡는 트리이다.
 
 - 규칙에 맞는 레드 블랙 트리라고 해서, 규칙에 맞는 AVL 트리는 아닐 수 있다.
 
-# **Red Black Tree의 규칙**
+## **Red Black Tree의 규칙**
 
 1. 모든 노드는 빨간색 또는 검은색이다.
 
@@ -31,7 +25,7 @@
 
 6. 모든 **빈 노드(null)** 는 **검은색**이라고 가정한다. (**External Property**)
 
-# Double Red를 해결하는 전략
+## Double Red를 해결하는 전략
 
 ### Restructuring - BLACK AUNT ROTATE
 
@@ -56,3 +50,7 @@
 - 색상 전환을 하고 나면 **부모 노드**는 **빨간색**이고 **두 자식 노드**는 **검은색**이 되어야 한다.
     - 부모 노드가 빨간색 노드로 변하면서, Double Red 가 연쇄적으로 발생할 가능성도 있다.
 - Recoloring의 시간 복잡도는 O(1)이나, Root까지 propagation될 수 있으므로 최악의 경우 O(logn)이 걸린다. 마찬가지로 **노드의 insertion** 이후 발생하므로 전체 시간 복잡도는 **O(logn)** 이 된다.
+
+#### 참고 자료
+- [알고리즘 ) Red-Black Tree](https://zeddios.tistory.com/237)
+- [Red/Black Tree](https://www.cs.usfca.edu/~galles/visualization/RedBlack.html)
