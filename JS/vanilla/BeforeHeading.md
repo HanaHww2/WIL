@@ -1,35 +1,24 @@
-# 시작하기 전에
-### 참고 자료)
-
-- 드림코딩 엘리님 JS 기초 강의
-    - [https://www.youtube.com/playlist?list=PLv2d7VI9OotTVOL4QmPfvJWPJvkmv6h-2](https://www.youtube.com/playlist?list=PLv2d7VI9OotTVOL4QmPfvJWPJvkmv6h-2)
-- 부스트코스 윤지수님 풀스택 강의 
-    - [https://www.boostcourse.org/web316/joinLectures/12943](https://www.boostcourse.org/web316/joinLectures/12943)
-
-
-🥳 
-- 모던 JS 튜토리얼 (KO) [https://ko.javascript.info/](https://ko.javascript.info/)
-
-- 타입스크립트 참고) [https://www.typescriptlang.org/](https://www.typescriptlang.org/)
-
-- 플레이그라운드를 활용해보자!
-- 타입을 지정한 명확한 코딩이 가능하다!
+# 시작하기 전
 
 > ES 6 이상을 모던JS라고 하며, 현대 JS의 기본 문법이라고 볼 수 있다. (일반적으로 사용된다)
-
 > 💡 참고) [https://developer.mozilla.org/ko/docs/orphaned/Web/JavaScript/Reference](https://developer.mozilla.org/ko/>docs/orphaned/Web/JavaScript/Reference)
 
+### 🥳추천 사이트
+- 모던 JS 튜토리얼 (KO) [https://ko.javascript.info/](https://ko.javascript.info/)
+- 타입스크립트 참고) [https://www.typescriptlang.org/](https://www.typescriptlang.org/)
+    - 플레이그라운드를 활용해보자!
+    - 타입을 지정한 명확한 코딩이 가능하다!
 ---
-# 몇 가지 알아두면 좋은 것들
+## 알아두면 좋은 것들
 
-## 자바스크립트 관련 문서
+### 자바스크립트 관련 문서
 
 - 자바스크립트의 공식 사이트
     - [https://www.ecma-international.org](https://www.ecma-international.org/)
 - 조금 더 보기 쉬운 사이트
     - [https://developer.mozilla.org](https://developer.mozilla.org/)
 
-## Developer Tool in Chrome
+### Developer Tool in Chrome
 
 - ctrl + shift + i : Dev tool (in 크롬 브라우저)
 - Elements탭은 HTML 작성시 활용
@@ -38,7 +27,7 @@
 - Network탭은 네트워크의 발생과 데이터 전송에 대해 체크 가능
 - 기타 : 퍼포먼스, 메모리 등 분석
 
-# Wep API(Application Programming Interface)s?
+## Wep API(Application Programming Interface)s?
 
 - 브라우저가 제공하고 이해하는 함수들의 모음
 - js와 별개 (js에 포함된 것이 아님)
@@ -51,7 +40,7 @@
             - [https://developer.mozilla.org/ko/docs/Web/API/Console_API](https://developer.mozilla.org/ko/docs/Web/API/Console_API)
             - [https://nodejs.org/api/console.html](https://nodejs.org/api/console.html)
 
-# async vs defer
+## async vs defer
 
 1. ``<head>`` 태그 안에 ``<script>`` 태그(js 파일)를 두는 경우
     - parsing HTML -> blocked -> fetching js -> executing js -> parsing HTML and then page is ready
@@ -75,7 +64,7 @@
     - HTML을 parsing 하는 동안 필요한 js 파일들을 모두 먼저 다운로드 한 다음, 페이지가 준비가 되면 등록된 순서대로 js 파일을 실행한다.
         - 다수 스크립트 사용시, 정의한 순서대로 스크립트를 실행한다
 
-# ‘use strict’;
+## ‘use strict’;
 
 - 바닐라js 사용시 적용 추천
     - 타입스크립트에서는 필요 없는 옵션
@@ -87,6 +76,4 @@
 - js 엔진이 조금 더 효율적으로 js 파일을 번역하므로 실행하는데 성능 개선이 가능하다.
 
 ### 출처
-
-- 드림코딩 엘리님 강의
-    - [https://www.youtube.com/watch?v=tJieVCgGzhs&list=PLv2d7VI9OotTVOL4QmPfvJWPJvkmv6h-2&index=2](https://www.youtube.com/watch?v=tJieVCgGzhs&list=PLv2d7VI9OotTVOL4QmPfvJWPJvkmv6h-2&index=2)
+- [드림코딩 엘리님 강의](https://www.youtube.com/watch?v=tJieVCgGzhs&list=PLv2d7VI9OotTVOL4QmPfvJWPJvkmv6h-2&index=2)
