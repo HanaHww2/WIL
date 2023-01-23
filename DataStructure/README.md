@@ -1,5 +1,5 @@
 # 자바로 구현하고 배우는 자료구조
-- [자바로 구현하고 배우는 자료구조](https://www.boostcourse.org/cs204)
+- 참고 강의 링크 : [자바로 구현하고 배우는 자료구조](https://www.boostcourse.org/cs204)
 - 부스트코스에서 제공하는 강의를 통해 학습하고 정리한 내용을 기록합니다.
 
 0. [자바 자료구조 기본](java-ds-0.%20introduce.md)
