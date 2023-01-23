@@ -321,8 +321,8 @@ public class LinkedList<E> implements ListI<E> {
 
 노드의 추가/삭제 과정에서 next와 prev 포인터를 동시에 업데이트해 주어야 하므로, 구현이 복잡해진다는 단점이 있다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/626fcdd9-675f-4af6-b8c1-d4896a71d15f/Untitled.png)
-
+![image](https://user-images.githubusercontent.com/62924471/214089790-1f144192-906d-4b0c-a7a4-9d36a344edf5.png)
+	
 ### removeLast() 메소드 시간 복잡도
 
 - **단일 연결 리스트**는 tail 포인터가 있더라도 모든 노드를 한 번씩 거쳐야 한다는 단점이 있었다.  **O(n)의 시간 복잡도**를 가진다.
@@ -426,8 +426,8 @@ public class DoublyLinkedList<E> implements ListI<E> {
 
 원형 연결 리스트는 **마지막 노드의 next 포인터가 연결 리스트의 다른 노드를 가리키는 연결 리스트**를 말한다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/088b67fd-a921-4b50-9202-c94dd3b1ba77/Untitled.png)
-
+<img src='https://user-images.githubusercontent.com/62924471/214090050-161ac11e-0203-4e05-899a-cae2b8757e5e.png' width='400'>
+			 
 ### 원형 구조 파악
 
 - 마지막 노드의 next 포인터가 **head**를 가리키는 경우
