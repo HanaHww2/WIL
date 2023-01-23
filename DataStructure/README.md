@@ -8,7 +8,7 @@
 3. [Linked List 연결리스트](java-ds-3.%20linked-list.md)
 4. [Hash 해쉬](java-ds-4.%20hash.md)
 5. [Tree 트리](java-ds-5.%20tree.md)
-6. [BST 이진 탐색 트리](java-ds-6.%20bst.md) - 이하 구현 드드 보충 예정
+6. [BST 이진 탐색 트리](java-ds-6.%20bst.md) - 이하 구현 코드 보충 예정
 7. [AVL Tree 자기균형 트리](java-ds-7.%20avl-tree.md)
 8. [RB Tree 적흑 트리](java-ds-8.%20red-black-tree.md)
 
@@ -40,11 +40,8 @@
 ### Contents
 - [그래프](./Graph.md)
 - [힙](./heap.md)
-- [RBT-레드블랙트리](./RedBlackTree.md)
 - [B+Tree](./B%2BTree.md)
 
-#### dfs/bfs 탐색
-#### 최단 경로 문제(다익스트라 알고리즘)
 #### 트리
 #### 힙 Heap
 - 트리 기반 자료구조의 특수한 한 형태로, 정렬 알고리즘을 위한 자료구조이다.
