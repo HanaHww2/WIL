@@ -56,6 +56,7 @@ public class HttpRequestTest {
     public @interface WebMvcTest {
 
     ```
+
 ## @WebMvcTest vs. @SpringBootTest with @AutoConfigureMockMvc and @MockBean (when you testing)
 ```java
 @SpringBootTest

@@ -1,1 +1,2 @@
-https://learngitbranching.js.org/?locale=ko
+## 깃 공부하기
+- https://learngitbranching.js.org/?locale=ko
