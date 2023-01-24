@@ -45,9 +45,7 @@ E[] storage = (E[]) new Object[size]; // 이용 가능
 E[] storage = new E[size]; // 컴파일되지 않는다.
 ```
 
-- 참고)
-
-[](https://www.baeldung.com/java-generic-array)
+- 참고) [https://www.baeldung.com/java-generic-array](https://www.baeldung.com/java-generic-array)
 
 - 아래 코드는 위 글에서 가져왔다. 아래는 어설픈 번역이므로 원문을 참고하길 바란다.
 - 원문에서는 컴파일 오류가 나지 않을 거라 가정하고, 제네릭 타입 배열 작성법에 대한 이유를 설명한다.
