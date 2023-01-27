@@ -36,5 +36,5 @@ It's personal note about Everything I learned.
 - [스프링 목차 페이지](./Spring/README.md)
 
 ## Tool
-- [Docker & docker-compose](./Dev/docker)
-- [Git basic](./Dev/Git/git-basic.md)
+- [Docker & docker-compose](./Tool/docker)
+- [Git basic](./Tool/Git/git-basic.md)
