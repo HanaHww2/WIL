@@ -10,9 +10,10 @@
 
 #### 1. sql 파싱
 - 사용자로부터 전달받은 sql을 SQL 파서가 파싱한다. 
-    1. 파싱 트래 생성 : sql 문을 이루는 개별 구성요소를 분석해서 파싱 트리 생성 
+    1. 파싱 트리 생성 : sql 문을 이루는 개별 구성요소를 분석해서 파싱 트리 생성 
     2. syntax 체크 : 문법적 오류가 없는지 확인 (사용할 수 없는 키워드 사용, 순서가 잘못된 경우가 있는지 등)
     3. semantic 체크 : 의미상 오류가 없는지 확인 (존재하지 않는 테이블 또는 컬럼 사용이 없는지, 권한이 있는지)
+
 #### 2. sql 최적화
 - 옵티마이저가 수행
     - 미리 수집한 시스템 및 오브젝트 통계정보를 바탕으로 다양한 실행 경로를 생성해서 비교하여 가장 효율적인 하나를 선택
@@ -26,10 +27,13 @@
 
 ### SQL 옵티마이저
 - 사용자가 원하는 작업을 가장 효율적으로 수행할 수 있는 최적의 데이터 액세스 경로를 선택해주는 DBMS의 핵심 엔진
+
 #### 옵티마이저의 최적화 단계 
 1) 사용자로부터 전달받은 쿼리를 수행하는 데 후보군이 될만한 실행계획들을 탐
 2) 데이터 딕셔너리(Data Dictionary)에 미리 수집해 둔 오브젝트 통계 및 시스템 통계정보를 이용해 각 실행계획의 예상 비용을 산정
 3) 최저 비용을 나타내는 실행계획을 선택
+
+>
 
 ### 실행계획과 비용
 - SQL 실행경로를 미리보는 기능
@@ -48,12 +52,48 @@
         FROM 고객 A
         WHERE 고객ID = '00000000008'
         ```
-## SQL 공유 및 재사용
+
+#### 자주 사용하는 힌트 목록  
+분류 | 힌트 | 설명
+:--:|:--:|:--:
+최적화 목표	 | ALL_ROWS | 전체 처리속도 최적화
+최적화 목표	| FIRST_ROWS(N)	| 최초 N건 응답속도 최적화
+액세스 방식	| FULL	Table|  Full Scan으로 유도
+액세스 방식	| INDEX	| Index Scan으로 유도
+액세스 방식| 	INDEX_DESC| 	Index를 역순으로 스캔하도록 유도
+액세스 방식	| INDEX_FFS	| Index Fast Full Scan으로 유도
+액세스 방식	| INDEX_SS| 	Index Skip Scan으로 유도
+조인 방식| 	USE_NL	| NL 조인으로 유도
+조인 방식	| USE_MERGE	| 소트 머지 조인으로 유도
+조인 방식| 	USE_HASH	| 해시 조인으로 유도
+조인 방식	| NL_SJ| 	NL 세미조인으로 유도
+조인 방식	| MERGE_SJ	| 소트 머지 세미조인으로 유도
+조인 방식	| HASH_SJ| 	해시 세미조인으로 유도
+서브쿼리 팩토링	| MATERIALIZE	| WITH 문으로 정의한 집합을 </br> 물리적으로 생성하도록 유도</br> (ex. WITH /+ INLINE / T AS ( SELECT ... ))
+서브쿼리 팩토링| 	INLINE	| WITH 문으로 정의한 집합을</br>  물리적으로 생성하지 않고 INLINE 처리하도록 유도 </br> (ex. WITH /+ INLINE / AS ( SELECT ... ))
+쿼리 변환| 	MERGE	| 뷰 머징 유도
+쿼리 변환	| NO_MERGE	| 뷰 머징 방지
+쿼리 변환| 	UNNEST	| 서브쿼리 Unnesting 유도
+쿼리 변환	| NO_UNNEST	| 서브쿼리 Unnesting 방지
+쿼리 변환	| PUSH_PRED	| 조인조건 Pushdown 유도
+쿼리 변환| 	NO_PUSH_PRED| 	조인조건 Pushdown 방지
+쿼리 변환| 	USE_CONCAT	| OR 또는 IN-List 조건을 OR-Expansion으로 유도
+쿼리 변환	| NO_EXPAND	| OR 또는 IN-List 조건에 대한 OR-Expansion 방지
+병렬 처리| 	PARALLEL| 	테이블 스캔 또는 DML을 병렬방식으로 처리하도록 유도 </br> (ex. PARALLEL(T1 2) PARALLEL (T2 2))
+병렬 처리| 	PARALLEL_INDEX	| 인덱스 스캔을 병렬방식으로 처리하도록 유도
+병렬 처리	| PQ_DISTRIBUTE	| 병렬 수행 시 데이터 분배 방식 결정 </br> (ex. PQ_DISTRIBUTE(T1 HASH HASH))
+기타	| APPEND| 	Direct-Path Insert로 유도
+기타	| DRIVING_SITE | 	DB Link Remote 쿼리에 대한 최적화 및 실행 주체 지정</br> (Local 또는 Remote)
+기타	| PUSH_SUBQ	| 서브쿼리를 가급적 빨리 필터링하도록 유도
+기타	| NO_PUSH_SUBQ	| 서브쿼리를 가급적 늦게 필터링하도록 유도
+
+
+# SQL 공유 및 재사용
 
 ### 소프트 파싱 vs. 하드 파싱
 
 ### SGA 
-
+<img width=500 src='https://user-images.githubusercontent.com/62924471/218224280-4e2e9622-a3b6-43e3-a403-bf97bef858c7.png'>
 - 서버 프로세스와 백그라운드 프로세스가 공통으로 액세스하는 데이터와 제어 구조를 캐싱하는 메모리 공간
 
 #### 라이브러리 캐시(Library Cache) 
@@ -64,43 +104,7 @@
 #### 소프트 파싱
 - SQL을 캐시에서 찾아 곧바로 실행단계로 넘어가는 것. Library Cache에서 이미 저장되어 있는 것 사용.
 #### 하드 파싱
+<img width=700 src='https://user-images.githubusercontent.com/62924471/218224294-812e9446-fadb-4e48-a82f-eb748bd975ea.png'>
 - SQL을 캐시에서 찾는데 실패해 최적화 및 로우 소스 생성 단계까지 모두 거치는 것
 - 소프트 파싱이든 하드 파싱이든 파싱은 실행된다. 대소문자만 달라도 새로 파싱한다.
 
-​
-
-
-- 자주 사용하는 힌트 목록  
-
-분류 | 힌트 | 설명
-:--:|:--:|:--:
-최적화 목표	 | ALL_ROWS | 전체 처리속도 최적화
-최적화 목표	FIRST_ROWS(N)	최초 N건 응답속도 최적화
-액세스 방식	FULL	Table Full Scan으로 유도
-액세스 방식	INDEX	Index Scan으로 유도
-액세스 방식	INDEX_DESC	Index를 역순으로 스캔하도록 유도
-액세스 방식	INDEX_FFS	Index Fast Full Scan으로 유도
-액세스 방식	INDEX_SS	Index Skip Scan으로 유도
-조인 방식	USE_NL	NL 조인으로 유도
-조인 방식	USE_MERGE	소트 머지 조인으로 유도
-조인 방식	USE_HASH	해시 조인으로 유도
-조인 방식	NL_SJ	NL 세미조인으로 유도
-조인 방식	MERGE_SJ	소트 머지 세미조인으로 유도
-조인 방식	HASH_SJ	해시 세미조인으로 유도
-서브쿼리 팩토링	MATERIALIZE	WITH 문으로 정의한 집합을 물리적으로 생성하도록 유도(ex. WITH /+ INLINE / T AS ( SELECT ... ))
-서브쿼리 팩토링	INLINE	WITH 문으로 정의한 집합을 물리적으로 생성하지 않고 INLINE 처리하도록 유도 (ex. WITH /+ INLINE / AS ( SELECT ... ))
-쿼리 변환	MERGE	뷰 머징 유도
-쿼리 변환	NO_MERGE	뷰 머징 방지
-쿼리 변환	UNNEST	서브쿼리 Unnesting 유도
-쿼리 변환	NO_UNNEST	서브쿼리 Unnesting 방지
-쿼리 변환	PUSH_PRED	조인조건 Pushdown 유도
-쿼리 변환	NO_PUSH_PRED	조인조건 Pushdown 방지
-쿼리 변환	USE_CONCAT	OR 또는 IN-List 조건을 OR-Expansion으로 유도
-쿼리 변환	NO_EXPAND	OR 또는 IN-List 조건에 대한 OR-Expansion 방지
-병렬 처리	PARALLEL	테이블 스캔 또는 DML을 병렬방식으로 처리하도록 유도 (ex. PARALLEL(T1 2) PARALLEL (T2 2))
-병렬 처리	PARALLEL_INDEX	인덱스 스캔을 병렬방식으로 처리하도록 유도
-병렬 처리	PQ_DISTRIBUTE	병렬 수행 시 데이터 분배 방식 결정 (ex. PQ_DISTRIBUTE(T1 HASH HASH))
-기타	APPEND	Direct-Path Insert로 유도
-기타	DRIVING_SITE	DB Link Remote 쿼리에 대한 최적화 및 실행 주체 지정(Local 또는 Remote)
-기타	PUSH_SUBQ	서브쿼리를 가급적 빨리 필터링하도록 유도
-기타	NO_PUSH_SUBQ	서브쿼리를 가급적 늦게 필터링하도록 유도
