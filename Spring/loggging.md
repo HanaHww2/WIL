@@ -11,7 +11,7 @@
   - 콘솔에 출력하는 것이 기본 설정
   - 파일은 옵셔널, 기본적으로 생성하지 않는다.
  
-- 스프링부트는 slf4j 와 같은 인터페이스를 두고, 구현체를 선택해 사용할 수 있도록 지원한다. (파사드 패턴)
+- 스프링부트는 Slf4j(Simple Logging Facade for Java) 와 같은 인터페이스를 두고, 구현체를 선택해 사용할 수 있도록 지원한다. (파사드 패턴)
 
 ## logback
 - starter를 사용하면 기본으로 logback을 활용한다고 하는데... 
@@ -119,4 +119,86 @@ initialization performed by Boot
   - 위 base.xml을 가져오는 logback-spring.xml을 파일을 생성하면, 로그 파일을 만들어주는 듯 하다.
   - 혹은 application.yml 파일에 파일 관련 설정을 넣어주면 로그 파일이 생성된다.
 - 즉, base.xml은 디폴트 설정은 아닌 듯 하다. 디폴트는 로그백 설정이 맞는 걸까.
+- 해당 라이브러리 이하의 자바 기본 설정을 따라가는 것으로 추측.. 
+    - LogFile 등을 확인해보았을 때 로그 파일 관련 변수값이 없으면 파일 생성을 하지 않는 듯 하다.
+- 나중에 심심할 때 디버거 찍어보는 걸로...
   
+### 커스텀해보기
+#### 1차 커스텀
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_TEMP" value="./logs"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+</configuration>
+```
+- logback-spring.xml 파일을 resources 디렉토리 이하에 생성
+    - base.xml 그대로 가져오기
+    - log 파일 생성 위치만 변경해주었다.
+
+#### 2차 커스텀
+- json appender 추가해보기
+    - 기존 다른 로그백 어펜더를 참고해서 작성
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <appender name="JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+<!--        <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">-->
+<!--            <jsonFormatter-->
+<!--                    class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter">-->
+<!--                <prettyPrint>true</prettyPrint>-->
+<!--            </jsonFormatter>-->
+<!--            <timestampFormat>yyyy-MM-dd' 'HH:mm:ss.SSS</timestampFormat>-->
+<!--        </layout>-->
+
+
+        <!--아래 인코더 라이브러리는 위에 활용한 라이브러리를 의존한다. 로그 스태시용으로 래핑한 라이브러리라고 볼 수 있을 듯?-->
+        <!--일단 예시가 좀 더 있고 뭔가 기능적으로 더 편해보여서 아래로 활용한다.-->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" >
+            <includeContext>true</includeContext>
+            <includeCallerData>true</includeCallerData>
+            <timestampPattern>yyyy-MM-dd HH:mm:ss.SSS</timestampPattern>
+            <fieldNames>
+                <timestamp>timestamp</timestamp>
+                <thread>thread</thread>
+                <message>message</message>
+                <stackTrace>exception</stackTrace>
+                <mdc>context</mdc>
+            </fieldNames>
+        </encoder>
+        <file>${JSON_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${JSON_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <cleanHistoryOnStart>${LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START:-false}</cleanHistoryOnStart>
+            <maxFileSize>${LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE:-10MB}</maxFileSize>
+            <totalSizeCap>${LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP:-0}</totalSizeCap>
+            <maxHistory>${LOGBACK_ROLLINGPOLICY_MAX_HISTORY:-7}</maxHistory>
+        </rollingPolicy>
+    </appender>
+</included>
+```
+
+- logback-spring.xml 도 수정한다.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_TEMP" value="./logs" />
+    <property name="JSON_FILE" value="${LOG_TEMP}/spring.log.json}"/>
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <include resource="json-appender.xml" />
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+        <appender-ref ref="JSON" />
+    </root>
+
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="JSON" />
+        </root>
+    </springProfile>
+</configuration>
+```
